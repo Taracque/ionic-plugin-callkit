@@ -20,6 +20,11 @@
 #import <Cordova/CDVPlugin.h>
 #import <CallKit/CallKit.h>
 
-@interface CDVCallKit : CDVPlugin <CXCallObserverDelegate>{}
-@property ( nonatomic ) CXCallObserver *callObserver;
+@interface CDVCallKit : CDVPlugin <CXProviderDelegate>{}
+@property ( nonatomic ) CXProvider *callProvider;
+@property (nonatomic, copy) NSString *callbackId;
+
+- (void)init:(CDVInvokedUrlCommand*)command;
+- (void)receiveCall:(CDVInvokedUrlCommand*)command;
+
 @end
