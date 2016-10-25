@@ -17,14 +17,29 @@
  under the License.
  */
 
-#import <Cordova/CDVPlugin.h>
-#import <CallKit/CallKit.h>
+import PushKit
 
-@interface CDVCallKit : CDVPlugin <CXProviderDelegate>{}
-@property ( nonatomic ) CXProvider *callProvider;
-@property (nonatomic, copy) NSString *callbackId;
-
-- (void)init:(CDVInvokedUrlCommand*)command;
-- (void)receiveCall:(CDVInvokedUrlCommand*)command;
-
-@end
+@objc(CDVCallKit) class CDVCallKit : CDVPlugin {
+    let callManager = CDVCallManager()
+    var providerDelegate: CDVProviderDelegate?
+    
+    func register(_ command:CDVInvokedUrlCommand) {
+        var pluginResult = CDVPluginResult(
+            status : CDVCommandStatus_ERROR
+        )
+        
+        let msg = command.arguments[0] as? String ?? ""
+        
+        providerDelegate = CDVProviderDelegate(callManager: callManager)
+        
+        pluginResult = CDVPluginResult(
+            status: CDVCommandStatus_OK,
+            messageAs: msg
+        )
+        
+        self.commandDelegate!.send(
+            pluginResult,
+            callbackId: command.callbackId
+        )
+    }
+}

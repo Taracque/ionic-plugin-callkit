@@ -4,23 +4,14 @@ var CallKit = function() {
 	console.log('CallKit instanced');
 };
 
-CallKit.prototype.init = function() {
+CallKit.prototype.register = function() {
 	var errorCallback = function() {};
 	var successCallback = function(obj) {
 		console.log(obj);
 	};
 
-	exec(successCallback, errorCallback, 'CallKit', 'init' );
+	exec(successCallback, errorCallback, 'CallKit', 'register' );
 };
-
-CallKit.prototype.receiveCall = function(username,call_id,video) {
-	var errorCallback = function() {};
-	var successCallback = function(obj) {
-		console.log(obj);
-	};
-
-	exec(successCallback, errorCallback, 'CallKit', 'receiveCall' );
-}
 
 if (typeof module != 'undefined' && module.exports) {
 	module.exports = CallKit;

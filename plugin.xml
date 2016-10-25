@@ -60,8 +60,11 @@
 			</feature>
 		</config-file>
 
-        <header-file src="src/ios/CDVCallKit.h" />
-        <source-file src="src/ios/CDVCallKit.m" />
+        <source-file src="src/ios/Array+CDVCall.swift" />
+        <source-file src="src/ios/CDVCallKit.swift" />
+        <source-file src="src/ios/CDVProviderDelegate.swift" />
+        <source-file src="src/ios/CDVCall.swift" />
+        <source-file src="src/ios/CDVCallManager.swift" />
 
 		<framework src="CallKit.framework" />
     </platform>
