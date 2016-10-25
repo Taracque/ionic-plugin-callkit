@@ -17,8 +17,7 @@
  under the License.
  */
 
-import PushKit
-
+@available(iOS 10.0, *)
 @objc(CDVCallKit) class CDVCallKit : CDVPlugin {
     let callManager = CDVCallManager()
     var providerDelegate: CDVProviderDelegate?

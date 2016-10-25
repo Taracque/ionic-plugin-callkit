@@ -4,6 +4,7 @@
  */
 import Foundation
 
+@available(iOS 10.0, *)
 final class CDVCall {
     
     // MARK: Metadata Properties

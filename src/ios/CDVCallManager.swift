@@ -5,6 +5,7 @@
 
 import CallKit
 
+@available(iOS 10.0, *)
 final class CDVCallManager: NSObject {
     
     let callController = CXCallController()
