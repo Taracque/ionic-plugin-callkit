@@ -28,13 +28,31 @@ import PushKit
             status : CDVCommandStatus_ERROR
         )
         
-        let msg = command.arguments[0] as? String ?? ""
-        
         providerDelegate = CDVProviderDelegate(callManager: callManager)
         
         pluginResult = CDVPluginResult(
-            status: CDVCommandStatus_OK,
-            messageAs: msg
+            status: CDVCommandStatus_OK
+        )
+        
+        self.commandDelegate!.send(
+            pluginResult,
+            callbackId: command.callbackId
+        )
+    }
+
+    func reportIncomingCall(_ command:CDVInvokedUrlCommand) {
+        var pluginResult = CDVPluginResult(
+            status : CDVCommandStatus_ERROR
+        )
+        
+        let uuid = UUID(); /* command.arguments[0] as? String ?? "" */
+        let name = command.arguments[1] as? String ?? ""
+        let hasVideo = ((command.arguments[2] as? String ?? "false") == "true")
+
+        providerDelegate?.reportIncomingCall(uuid,handle: name,hasVideo: hasVideo)
+        
+        pluginResult = CDVPluginResult(
+            status: CDVCommandStatus_OK
         )
         
         self.commandDelegate!.send(
