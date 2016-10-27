@@ -19,7 +19,7 @@
 
 @available(iOS 10.0, *)
 @objc(CDVCallKit) class CDVCallKit : CDVPlugin {
-    let callManager = CDVCallManager()
+    var callManager: CDVCallManager?
     var providerDelegate: CDVProviderDelegate?
     
     func register(_ command:CDVInvokedUrlCommand) {
@@ -27,7 +27,9 @@
             status : CDVCommandStatus_ERROR
         )
         
-        providerDelegate = CDVProviderDelegate(callManager: callManager)
+        callManager = CDVCallManager()
+
+        providerDelegate = CDVProviderDelegate(callManager: callManager!)
         
         pluginResult = CDVPluginResult(
             status: CDVCommandStatus_OK
