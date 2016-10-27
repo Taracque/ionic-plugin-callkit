@@ -23,7 +23,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
     
     /// The app's provider configuration, representing its CallKit capabilities
     static var providerConfiguration: CXProviderConfiguration {
-        let localizedName = NSLocalizedString("APPLICATION_NAME", comment: "Name of application")
+        let localizedName = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleDisplayName") as! String
         let providerConfiguration = CXProviderConfiguration(localizedName: localizedName)
         
         providerConfiguration.supportsVideo = true
@@ -32,11 +32,11 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
         
         providerConfiguration.supportedHandleTypes = [.phoneNumber]
         
-        if let iconMaskImage = UIImage(named: "IconMask") {
+        if let iconMaskImage = UIImage(named: "AppIcon") {
             providerConfiguration.iconTemplateImageData = UIImagePNGRepresentation(iconMaskImage)
         }
         
-        providerConfiguration.ringtoneSound = "Ringtone.caf"
+        providerConfiguration.ringtoneSound = "/www/media/Ringtone.caf"
         
         return providerConfiguration
     }
