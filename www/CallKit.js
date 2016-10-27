@@ -13,13 +13,13 @@ CallKit.prototype.register = function() {
 	exec(successCallback, errorCallback, 'CallKit', 'register' );
 };
 
-CallKit.prototype.reportIncomingCall = function() {
+CallKit.prototype.reportIncomingCall = function(name,isVideo) {
 	var errorCallback = function() {};
 	var successCallback = function(obj) {
 		console.log(obj);
 	};
 
-	exec(successCallback, errorCallback, 'CallKit', 'reportIncomingCall' );
+	exec(successCallback, errorCallback, 'CallKit', 'reportIncomingCall', [name, isVideo] );
 };
 
 if (typeof module != 'undefined' && module.exports) {

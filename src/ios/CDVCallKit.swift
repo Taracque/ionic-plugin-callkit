@@ -46,9 +46,9 @@
             status : CDVCommandStatus_ERROR
         )
         
-        let uuid = UUID(); /* command.arguments[0] as? String ?? "" */
-        let name = command.arguments[1] as? String ?? ""
-        let hasVideo = ((command.arguments[2] as? String ?? "false") == "true")
+        let uuid = UUID()
+        let name = command.arguments[0] as? String ?? ""
+        let hasVideo = ((command.arguments[1] as? String ?? "false") == "true")
 
         providerDelegate?.reportIncomingCall(uuid,handle: name,hasVideo: hasVideo)
         
