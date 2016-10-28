@@ -21,24 +21,35 @@
 @objc(CDVCallKit) class CDVCallKit : CDVPlugin {
     var callManager: CDVCallManager?
     var providerDelegate: CDVProviderDelegate?
-    
-    func register(_ command:CDVInvokedUrlCommand) {
-        var pluginResult = CDVPluginResult(
-            status : CDVCommandStatus_ERROR
-        )
-        
-        callManager = CDVCallManager()
+    var callbackId: String?
 
-        providerDelegate = CDVProviderDelegate(callManager: callManager!)
-        
-        pluginResult = CDVPluginResult(
-            status: CDVCommandStatus_OK
-        )
-        
-        self.commandDelegate!.send(
-            pluginResult,
-            callbackId: command.callbackId
-        )
+    func register(_ command:CDVInvokedUrlCommand) {
+        self.commandDelegate.run(inBackground: {
+            var pluginResult = CDVPluginResult(
+                status : CDVCommandStatus_ERROR
+            )
+            
+            self.callManager = CDVCallManager()
+
+            self.providerDelegate = CDVProviderDelegate(callManager: self.callManager!)
+            
+            self.callbackId = command.callbackId
+
+            NotificationCenter.default.addObserver(self, selector: #selector(self.handle(withNotification:)), name: Notification.Name("CDVCallManagerCallsChangedNotification"), object: nil)
+
+            pluginResult = CDVPluginResult(
+                status: CDVCommandStatus_OK
+            )
+            
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        });
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     func reportIncomingCall(_ command:CDVInvokedUrlCommand) {
@@ -60,5 +71,9 @@
             pluginResult,
             callbackId: command.callbackId
         )
+    }
+    
+    @objc func handle(withNotification notification : NSNotification) {
+        print("RECEIVED SPECIFIC NOTIFICATION: \(notification)")
     }
 }

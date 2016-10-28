@@ -188,6 +188,8 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
         print("Timed out \(#function)")
         
         // React to the action timeout if necessary, such as showing an error UI.
+        
+        action.fulfill();
     }
     
     func provider(_ provider: CXProvider ) {

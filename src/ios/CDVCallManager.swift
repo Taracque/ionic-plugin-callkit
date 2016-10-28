@@ -52,7 +52,7 @@ final class CDVCallManager: NSObject {
     
     // MARK: Call Management
     
-    static let CallsChangedNotification = Notification.Name("CallManagerCallsChangedNotification")
+    static let CallsChangedNotification = Notification.Name("CDVCallManagerCallsChangedNotification")
     
     private(set) var calls = [CDVCall]()
     
