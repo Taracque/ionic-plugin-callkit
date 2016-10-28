@@ -32,7 +32,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
         
         providerConfiguration.supportedHandleTypes = [.phoneNumber]
         
-        if let iconMaskImage = UIImage(named: "AppIcon") {
+        if let iconMaskImage = UIImage(named: "AppIcon40x40") {
             providerConfiguration.iconTemplateImageData = UIImagePNGRepresentation(iconMaskImage)
         }
         
