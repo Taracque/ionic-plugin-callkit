@@ -68,8 +68,6 @@
             status: CDVCommandStatus_OK
         )
         pluginResult?.setKeepCallbackAs(false)
-
-        self.callbackId = command.callbackId
         
         self.commandDelegate!.send(
             pluginResult,
