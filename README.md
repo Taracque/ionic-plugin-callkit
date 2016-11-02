@@ -3,6 +3,7 @@ Ionic/Cordova plugin for CallKit
 
 Exmaple:
 
+```javascript
 .factory('$ionicCallKit', ['$q', function($q) {
 	var callKit;
 
@@ -25,16 +26,21 @@ Exmaple:
 		}
 	};
 }])
+```
 
 use
 
+```javascript
 $ionicCallKit.register( callChanged )
+```
 
 to register the plugin. Where
 
+```javascript
 callChanged = function(obj) {
 < your code >
 }
+```
 
 obj has the following properties:
 
