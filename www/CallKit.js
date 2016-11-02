@@ -17,10 +17,10 @@ CallKit.prototype.register = function(callChanged) {
 	exec(successCallback, errorCallback, 'CallKit', 'register' );
 };
 
-CallKit.prototype.reportIncomingCall = function(name,isVideo) {
+CallKit.prototype.reportIncomingCall = function(name,isVideo,onSuccess) {
 	var errorCallback = function() {};
 	var successCallback = function(obj) {
-		console.log(obj);
+		onSuccess(obj);
 	};
 
 	exec(successCallback, errorCallback, 'CallKit', 'reportIncomingCall', [name, isVideo] );
