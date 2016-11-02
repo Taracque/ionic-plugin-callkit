@@ -4,10 +4,14 @@ var CallKit = function() {
 	console.log('CallKit instanced');
 };
 
-CallKit.prototype.register = function() {
+CallKit.prototype.register = function(callChanged) {
 	var errorCallback = function() {};
 	var successCallback = function(obj) {
-		console.log(obj);
+		if (obj && obj.hasOwnProperty('call')) {
+			/* this is a call changed callback! */
+			callChanged(obj);
+		} else {
+		}
 	};
 
 	exec(successCallback, errorCallback, 'CallKit', 'register' );

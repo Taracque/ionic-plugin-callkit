@@ -30,7 +30,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
         
         providerConfiguration.maximumCallsPerCallGroup = 1
         
-        providerConfiguration.supportedHandleTypes = [.phoneNumber]
+        providerConfiguration.supportedHandleTypes = [.generic]
         
         if let iconMaskImage = UIImage(named: "AppIcon40x40") {
             providerConfiguration.iconTemplateImageData = UIImagePNGRepresentation(iconMaskImage)
@@ -47,7 +47,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
     func reportIncomingCall(_ uuid: UUID, handle: String, hasVideo: Bool = false, completion: ((NSError?) -> Void)? = nil) {
         // Construct a CXCallUpdate describing the incoming call, including the caller.
         let update = CXCallUpdate()
-        update.remoteHandle = CXHandle(type: .phoneNumber, value: handle)
+        update.remoteHandle = CXHandle(type: .generic, value: handle)
         update.hasVideo = hasVideo
         
         // Report the incoming call to the system

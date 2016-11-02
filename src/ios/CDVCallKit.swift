@@ -74,6 +74,35 @@
     }
     
     @objc func handle(withNotification notification : NSNotification) {
-        print("RECEIVED SPECIFIC NOTIFICATION: \(notification)")
+        if (notification.name == Notification.Name("CDVCallManagerCallsChangedNotification")) {
+            let notificationObject = notification.object as? CDVCallManager
+            var resultMessage = [String: Any]()
+            
+            if (((notificationObject?.calls) != nil) && (notificationObject!.calls.count>0)) {
+                let call = notificationObject?.calls[0]
+                
+                resultMessage = [
+                    "handle" : call?.handle,
+                    "isOutgoing" : call?.isOutgoing,
+                    "isOnHold" : call?.isOnHold,
+                    "hasConnected" : call?.hasConnected,
+                    "hasEnded" : call?.hasEnded,
+                    "hasStartedConnecting" : call?.hasStartedConnecting,
+                    "endDate" : call?.endDate?.string(format: "yyyy-MM-dd'T'HH:mm:ssZ"),
+                    "connectDate" : call?.connectDate?.string(format: "yyyy-MM-dd'T'HH:mm:ssZ"),
+                    "connectingDate" : call?.connectingDate?.string(format: "yyyy-MM-dd'T'HH:mm:ssZ"),
+                    "duration" : call?.duration
+                ]
+            }
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: resultMessage)
+            
+            print("RECEIVED SPECIFIC NOTIFICATION: \(notification)")
+            
+            self.commandDelegate!.send(
+                pluginResult, callbackId: self.callbackId
+            )
+        } else {
+            print("INVALID NOTIFICATION RECEIVED: \(notification)")
+        }
     }
 }
