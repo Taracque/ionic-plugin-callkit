@@ -40,6 +40,7 @@
             pluginResult = CDVPluginResult(
                 status: CDVCommandStatus_OK
             )
+            pluginResult?.setKeepCallbackAs(true)
             
             self.commandDelegate!.send(
                 pluginResult,
@@ -66,6 +67,9 @@
         pluginResult = CDVPluginResult(
             status: CDVCommandStatus_OK
         )
+        pluginResult?.setKeepCallbackAs(true)
+
+        self.callbackId = command.callbackId
         
         self.commandDelegate!.send(
             pluginResult,
@@ -82,20 +86,21 @@
                 let call = notificationObject?.calls[0]
                 
                 resultMessage = [
-                    "handle" : call?.handle,
-                    "isOutgoing" : call?.isOutgoing,
-                    "isOnHold" : call?.isOnHold,
-                    "hasConnected" : call?.hasConnected,
-                    "hasEnded" : call?.hasEnded,
-                    "hasStartedConnecting" : call?.hasStartedConnecting,
-                    "endDate" : call?.endDate?.string(format: "yyyy-MM-dd'T'HH:mm:ssZ"),
-                    "connectDate" : call?.connectDate?.string(format: "yyyy-MM-dd'T'HH:mm:ssZ"),
-                    "connectingDate" : call?.connectingDate?.string(format: "yyyy-MM-dd'T'HH:mm:ssZ"),
-                    "duration" : call?.duration
+                    "handle" : call.handle as String? ?? "",
+                    "isOutgoing" : call.isOutgoing as Bool,
+                    "isOnHold" : call.isOnHold as Bool,
+                    "hasConnected" : call.hasConnected as Bool,
+                    "hasEnded" : call.hasEnded as Bool,
+                    "hasStartedConnecting" : call.hasStartedConnecting as Bool,
+                    "endDate" : call.endDate?.string(format: "yyyy-MM-dd'T'HH:mm:ssZ") as String? ?? "",
+                    "connectDate" : call.connectDate?.string(format: "yyyy-MM-dd'T'HH:mm:ssZ") as String? ?? "",
+                    "connectingDate" : call.connectingDate?.string(format: "yyyy-MM-dd'T'HH:mm:ssZ") as String? ?? "",
+                    "duration" : call.duration as Double
                 ]
             }
             let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: resultMessage)
-            
+            pluginResult?.setKeepCallbackAs(true)
+
             print("RECEIVED SPECIFIC NOTIFICATION: \(notification)")
             
             self.commandDelegate!.send(
