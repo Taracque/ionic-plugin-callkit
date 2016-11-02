@@ -67,7 +67,7 @@
         pluginResult = CDVPluginResult(
             status: CDVCommandStatus_OK
         )
-        pluginResult?.setKeepCallbackAs(true)
+        pluginResult?.setKeepCallbackAs(false)
 
         self.callbackId = command.callbackId
         
