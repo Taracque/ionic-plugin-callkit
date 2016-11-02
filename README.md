@@ -43,14 +43,13 @@ callChanged = function(obj) {
 ```
 
 obj has the following properties:
-
-"handle" : The handle of the call (the string what is displayed on the phone) String
-"isOutgoing" : is the call outgoing? Boolean
-"isOnHold" : is the is on hold? Boolean
-"hasConnected" : is it connected? Boolean
-"hasEnded" : is it eneded? Boolean
-"hasStartedConnecting" : is it started connecting (i.e. user pressed the accept button)? Boolean
-"endDate" : when the call is ended? String (ISO8601 format date time)
-"connectDate" : when the call is connected? String (ISO8601 format date time)
-"connectingDate" : when the call started to connect? String (ISO8601 format date time)
-"duration" : call duration? Double
+* "handle" : The handle of the call (the string what is displayed on the phone) String
+* "isOutgoing" : is the call outgoing? Boolean
+* "isOnHold" : is the is on hold? Boolean
+* "hasConnected" : is it connected? Boolean
+* "hasEnded" : is it eneded? Boolean
+* "hasStartedConnecting" : is it started connecting (i.e. user pressed the accept button)? Boolean
+* "endDate" : when the call is ended? String (ISO8601 format date time)
+* "connectDate" : when the call is connected? String (ISO8601 format date time)
+* "connectingDate" : when the call started to connect? String (ISO8601 format date time)
+* "duration" : call duration? Double
