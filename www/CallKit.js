@@ -7,7 +7,7 @@ var CallKit = function() {
 CallKit.prototype.register = function(callChanged) {
 	var errorCallback = function() {};
 	var successCallback = function(obj) {
-		if (obj && obj.hasOwnProperty('call')) {
+		if (obj && obj.hasOwnProperty('connectDate')) {
 			/* this is a call changed callback! */
 			callChanged(obj);
 		} else {
