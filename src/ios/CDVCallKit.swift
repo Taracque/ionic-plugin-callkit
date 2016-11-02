@@ -65,14 +65,23 @@
         providerDelegate?.reportIncomingCall(uuid,handle: name,hasVideo: hasVideo)
         
         pluginResult = CDVPluginResult(
-            status: CDVCommandStatus_OK
+            status: CDVCommandStatus_OK,
+            messageAs : uuid.uuidString
         )
         pluginResult?.setKeepCallbackAs(false)
-        
+
         self.commandDelegate!.send(
             pluginResult,
             callbackId: command.callbackId
         )
+    }
+
+    func endCall(_ command:CDVInvokedUrlCommand) {
+        self.commandDelegate.run(inBackground: {
+            let uuid = UUID(uuidString: command.arguments[0] as? String ?? "")
+            
+            self.callManager?.end((self.callManager?.callWithUUID(uuid!))!)
+        });
     }
     
     @objc func handle(withNotification notification : NSNotification) {
