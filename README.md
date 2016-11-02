@@ -53,3 +53,12 @@ obj has the following properties:
 * "connectDate" : when the call is connected? String (ISO8601 format date time)
 * "connectingDate" : when the call started to connect? String (ISO8601 format date time)
 * "duration" : call duration? Double
+
+Use 
+
+```javascript
+$ionicCallKit.reportIncomingCall(name,isVideo);
+```
+To activate the call screen.
+name : String = the caller name, which should displayed on the callscreen
+isVideo : boolean = set to true if this call can be a video call.
