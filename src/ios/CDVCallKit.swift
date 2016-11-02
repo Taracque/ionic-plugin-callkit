@@ -80,10 +80,12 @@
         self.commandDelegate.run(inBackground: {
             let uuid = UUID(uuidString: command.arguments[0] as? String ?? "")
             
-            let call = self.callManager?.callWithUUID(uuid!)
+            if (uuid != nil) {
+                let call = self.callManager?.callWithUUID(uuid!)
             
-            if (call != nil) {
-                self.callManager?.end(call!)
+                if (call != nil) {
+                    self.callManager?.end(call!)
+                }
             }
         });
     }
