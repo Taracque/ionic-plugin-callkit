@@ -83,7 +83,7 @@
             var resultMessage = [String: Any]()
             
             if (((notificationObject?.calls) != nil) && (notificationObject!.calls.count>0)) {
-                let call = notificationObject?.calls[0]
+                let call = (notificationObject?.calls[0])! as CDVCall
                 
                 resultMessage = [
                     "handle" : call.handle as String? ?? "",
