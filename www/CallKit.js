@@ -26,6 +26,13 @@ CallKit.prototype.reportIncomingCall = function(name,isVideo,onSuccess) {
 	exec(successCallback, errorCallback, 'CallKit', 'reportIncomingCall', [name, isVideo] );
 };
 
+CallKit.prototype.reportIncomingCall = function(uuid) {
+	var errorCallback = function() {};
+	var successCallback = function() {};
+
+	exec(successCallback, errorCallback, 'CallKit', 'endCall', [uuid] );
+};
+
 if (typeof module != 'undefined' && module.exports) {
 	module.exports = CallKit;
 }
