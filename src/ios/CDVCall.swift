@@ -93,17 +93,9 @@ final class CDVCall {
         // Simulate the call starting successfully
         completion?(true)
         
-        /*
-         Simulate the "started connecting" and "connected" states using artificial delays, since
-         the example app is not backed by a real network service
-         */
-        DispatchQueue.main.asyncAfter(wallDeadline: DispatchWallTime.now() + 3) {
-            self.hasStartedConnecting = true
-            
-            DispatchQueue.main.asyncAfter(wallDeadline: DispatchWallTime.now() + 1.5) {
-                self.hasConnected = true
-            }
-        }
+        self.hasStartedConnecting = true
+
+        self.hasConnected = true
     }
     
     func answerCDVCall() {
