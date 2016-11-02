@@ -60,7 +60,7 @@
 			</feature>
 		</config-file>
 
-        <source-file src="src/ios/Array+CDVCall.swift" />
+        <source-file src="src/ios/Array,Date+CDVCallKit.swift" />
         <source-file src="src/ios/CDVCallKit.swift" />
         <source-file src="src/ios/CDVProviderDelegate.swift" />
         <source-file src="src/ios/CDVCall.swift" />
