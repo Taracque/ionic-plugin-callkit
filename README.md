@@ -31,14 +31,14 @@ Exmaple:
 use
 
 ```javascript
-$ionicCallKit.register( callChanged )
+$ionicCallKit.register( callChanged, audioSystem )
 ```
 
 to register the plugin. Where
 
 ```javascript
 callChanged = function(obj) {
-< your code >
+	< your code >
 }
 ```
 
@@ -53,6 +53,13 @@ obj has the following properties:
 * "connectDate" : when the call is connected? String (ISO8601 format date time)
 * "connectingDate" : when the call started to connect? String (ISO8601 format date time)
 * "duration" : call duration? Double
+
+```javascript
+audioSystem = function(message) {
+	< your code >
+}
+```
+message : String = can be startAudio, stopAudio, configureAudio
 
 Use 
 
