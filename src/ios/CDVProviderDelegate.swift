@@ -5,6 +5,7 @@
 
 import Foundation
 import CallKit
+import AVFoundation
 
 @available(iOS 10.0, *)
 final class CDVProviderDelegate: NSObject, CXProviderDelegate {
