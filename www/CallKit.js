@@ -13,7 +13,7 @@ CallKit.prototype.register = function(callChanged,audioSystem) {
 				callChanged(obj);
 			} else if (obj.callbackType == "audioSystem") {
 				/* this is an audio system callback! */
-				audioSystem(obj);
+				audioSystem(obj.message);
 			}
 		} else {
 		}
