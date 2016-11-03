@@ -73,7 +73,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
     func providerDidReset(_ provider: CXProvider) {
         print("Provider did reset")
         
-        //        stopAudio()
+        self.postAudioNotification( message: "stopAudio" )
 
         /*
          End any ongoing calls if the provider resets, and remove them from the app's list of calls,
@@ -96,7 +96,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
          Configure the audio session, but do not start call audio here, since it must be done once
          the audio session has been activated by the system after having its priority elevated.
          */
-        //        configureAudioSession()
+        self.postAudioNotification( message: "configureAudio" )
         
         /*
          Set callback blocks for significant events in the call's lifecycle, so that the CXProvider may be updated
@@ -193,13 +193,22 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
         action.fulfill();
     }
     
-    func provider(_ provider: CXProvider ) {
+    func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
         print("Received \(#function)")
         
         // Start call audio media, now that the audio session has been activated after having its priority boosted.
         self.postAudioNotification( message: "startAudio" )
     }
-    
+
+    func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
+        print("Received \(#function)")
+        
+        /*
+         Restart any non-call related audio now that the app's audio session has been
+         de-activated after having its priority restored to normal.
+         */
+    }
+
     private func postAudioNotification(message: String) {
         NotificationCenter.default.post(name: type(of: self).AudioNotification, object: message)
     }
