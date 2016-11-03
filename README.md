@@ -8,11 +8,11 @@ Exmaple:
 	var callKit;
 
 	return {
-		register : function( callChanged ) {
+		register : function( callChanged, audioSystem ) {
 			if (typeof CallKit !== "undefined") {
 				var q = $q.defer();
 				callKit = new CallKit();
-				callKit.register( callChanged );
+				callKit.register( callChanged, audioSystem );
 				q.resolve(callKit);
 				return q.promise;
 			} else {
