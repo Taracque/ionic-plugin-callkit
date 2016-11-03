@@ -4,12 +4,17 @@ var CallKit = function() {
 	console.log('CallKit instanced');
 };
 
-CallKit.prototype.register = function(callChanged) {
+CallKit.prototype.register = function(callChanged,audioSystem) {
 	var errorCallback = function() {};
 	var successCallback = function(obj) {
-		if (obj && obj.hasOwnProperty('connectDate')) {
-			/* this is a call changed callback! */
-			callChanged(obj);
+		if (obj && obj.hasOwnProperty('callbackType')) {
+			if (obj.callbackType == "callChanged") {
+				/* this is a call changed callback! */
+				callChanged(obj);
+			} else if (obj.callbackType == "audioSystem") {
+				/* this is an audio system callback! */
+				audioSystem(obj);
+			}
 		} else {
 		}
 	};

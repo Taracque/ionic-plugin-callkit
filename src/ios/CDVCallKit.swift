@@ -35,7 +35,8 @@
             
             self.callbackId = command.callbackId
 
-            NotificationCenter.default.addObserver(self, selector: #selector(self.handle(withNotification:)), name: Notification.Name("CDVCallManagerCallsChangedNotification"), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.handle(withNotification:)), name: Notification.Name("CDVCallKitCallsChangedNotification"), object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.handle(withNotification:)), name: Notification.Name("CDVCallKitAudioNotification"), object: nil)
 
             pluginResult = CDVPluginResult(
                 status: CDVCommandStatus_OK
@@ -90,8 +91,22 @@
         });
     }
     
+    func callConnected(_ command:CDVInvokedUrlCommand) {
+        self.commandDelegate.run(inBackground: {
+            let uuid = UUID(uuidString: command.arguments[0] as? String ?? "")
+            
+            if (uuid != nil) {
+                let call = self.callManager?.callWithUUID(uuid!)
+                
+                if (call != nil) {
+                    call?.connectedCDVCall()
+                }
+            }
+        });
+    }
+    
     @objc func handle(withNotification notification : NSNotification) {
-        if (notification.name == Notification.Name("CDVCallManagerCallsChangedNotification")) {
+        if (notification.name == Notification.Name("CDVCallKitCallsChangedNotification")) {
             let notificationObject = notification.object as? CDVCallManager
             var resultMessage = [String: Any]()
             
@@ -99,6 +114,7 @@
                 let call = (notificationObject?.calls[0])! as CDVCall
                 
                 resultMessage = [
+                    "callbackType" : "callChanged",
                     "handle" : call.handle as String? ?? "",
                     "isOutgoing" : call.isOutgoing as Bool,
                     "isOnHold" : call.isOnHold as Bool,
@@ -114,11 +130,20 @@
             let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: resultMessage)
             pluginResult?.setKeepCallbackAs(true)
 
-            print("RECEIVED SPECIFIC NOTIFICATION: \(notification)")
+            print("RECEIVED CALL CHANGED NOTIFICATION: \(notification)")
             
             self.commandDelegate!.send(
                 pluginResult, callbackId: self.callbackId
             )
+        } else if (notification.name == Notification.Name("CDVCallKitAudioNotification")) {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: [ "callbackType" : "audioSystem", "message" : notification.object as? String ?? "" ])
+            pluginResult?.setKeepCallbackAs(true)
+
+            self.commandDelegate!.send(
+                pluginResult, callbackId: self.callbackId
+            )
+
+            print("RECEIVED AUDIO NOTIFICATION: \(notification)")
         } else {
             print("INVALID NOTIFICATION RECEIVED: \(notification)")
         }

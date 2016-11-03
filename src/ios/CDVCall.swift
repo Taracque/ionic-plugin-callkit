@@ -94,7 +94,10 @@ final class CDVCall {
         completion?(true)
         
         self.hasStartedConnecting = true
-
+    }
+    
+    func connectedCDVCall() {
+        // Call has connected
         self.hasConnected = true
     }
     
