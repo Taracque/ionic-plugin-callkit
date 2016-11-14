@@ -61,7 +61,7 @@
         
         let uuid = UUID()
         let name = command.arguments[0] as? String ?? ""
-        let hasVideo = ((command.arguments[1] as? String ?? "false") == "true")
+        let hasVideo = (command.arguments[1] as! Bool)
 
         providerDelegate?.reportIncomingCall(uuid,handle: name,hasVideo: hasVideo)
         
