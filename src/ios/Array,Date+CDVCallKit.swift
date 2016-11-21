@@ -21,7 +21,7 @@ extension Array {
  */
 
 extension Date {
-    func string(format: String) -> String {
+    func string(_ format: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = format
         return formatter.string(from: self)

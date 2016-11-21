@@ -121,9 +121,9 @@
                     "hasConnected" : call.hasConnected as Bool,
                     "hasEnded" : call.hasEnded as Bool,
                     "hasStartedConnecting" : call.hasStartedConnecting as Bool,
-                    "endDate" : call.endDate?.string(format: "yyyy-MM-dd'T'HH:mm:ssZ") as String? ?? "",
-                    "connectDate" : call.connectDate?.string(format: "yyyy-MM-dd'T'HH:mm:ssZ") as String? ?? "",
-                    "connectingDate" : call.connectingDate?.string(format: "yyyy-MM-dd'T'HH:mm:ssZ") as String? ?? "",
+                    "endDate" : call.endDate?.string("yyyy-MM-dd'T'HH:mm:ssZ") as String? ?? "",
+                    "connectDate" : call.connectDate?.string("yyyy-MM-dd'T'HH:mm:ssZ") as String? ?? "",
+                    "connectingDate" : call.connectingDate?.string("yyyy-MM-dd'T'HH:mm:ssZ") as String? ?? "",
                     "duration" : call.duration as Double
                 ]
             }
