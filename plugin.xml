@@ -68,4 +68,16 @@
 
 		<framework src="CallKit.framework" />
     </platform>
+    
+    <!-- android -->
+	<platform name="android">
+		<config-file target="config.xml" parent="/*">
+			<feature name="Echo">
+				<param name="android-package" value="hu.taracque.ionic.plugin.CallKit"/>
+			</feature>
+		</config-file>
+
+		<source-file src="src/android/CallKit.java" target-dir="src/hu/taracque/ionic/plugin" />
+	</platform>
+
 </plugin>
