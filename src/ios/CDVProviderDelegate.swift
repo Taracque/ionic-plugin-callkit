@@ -11,7 +11,7 @@ import AVFoundation
 final class CDVProviderDelegate: NSObject, CXProviderDelegate {
     
     let callManager: CDVCallManager
-    private let provider: CXProvider
+    fileprivate let provider: CXProvider
     static let AudioNotification = Notification.Name("CDVCallKitAudioNotification")
     
     init(callManager: CDVCallManager) {
@@ -74,7 +74,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
     func providerDidReset(_ provider: CXProvider) {
         print("Provider did reset")
         
-        self.postAudioNotification( message: "stopAudio" )
+        self.postAudioNotification( "stopAudio" )
 
         /*
          End any ongoing calls if the provider resets, and remove them from the app's list of calls,
@@ -97,7 +97,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
          Configure the audio session, but do not start call audio here, since it must be done once
          the audio session has been activated by the system after having its priority elevated.
          */
-        self.postAudioNotification( message: "configureAudio" )
+        self.postAudioNotification( "configureAudio" )
         
         /*
          Set callback blocks for significant events in the call's lifecycle, so that the CXProvider may be updated
@@ -136,7 +136,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
          Configure the audio session, but do not start call audio here, since it must be done once
          the audio session has been activated by the system after having its priority elevated.
          */
-        self.postAudioNotification( message: "configureAudio" )
+        self.postAudioNotification( "configureAudio" )
         
         // Trigger the call to be answered via the underlying network service.
         call.answerCDVCall()
@@ -153,7 +153,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
         }
         
         // Stop call audio whenever ending the call.
-        self.postAudioNotification( message: "stopAudio" )
+        self.postAudioNotification( "stopAudio" )
         
         // Trigger the call to be ended via the underlying network service.
         call.endCDVCall()
@@ -177,9 +177,9 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
         
         // Stop or start audio in response to holding or unholding the call.
         if call.isOnHold {
-            self.postAudioNotification( message: "stopAudio" )
+            self.postAudioNotification( "stopAudio" )
         } else {
-            self.postAudioNotification( message: "startAudio" )
+            self.postAudioNotification( "startAudio" )
         }
         
         // Signal to the system that the action has been successfully performed.
@@ -198,7 +198,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
         print("Received \(#function)")
         
         // Start call audio media, now that the audio session has been activated after having its priority boosted.
-        self.postAudioNotification( message: "startAudio" )
+        self.postAudioNotification( "startAudio" )
     }
 
     func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
@@ -210,7 +210,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
          */
     }
 
-    private func postAudioNotification(message: String) {
+    private func postAudioNotification(_ message: String) {
         NotificationCenter.default.post(name: type(of: self).AudioNotification, object: message)
     }
 }

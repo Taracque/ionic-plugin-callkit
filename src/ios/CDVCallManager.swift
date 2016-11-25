@@ -40,7 +40,7 @@ final class CDVCallManager: NSObject {
         requestTransaction(transaction)
     }
     
-    private func requestTransaction(_ transaction: CXTransaction) {
+    fileprivate func requestTransaction(_ transaction: CXTransaction) {
         callController.request(transaction) { error in
             if let error = error {
                 print("Error requesting transaction: \(error)")
@@ -54,7 +54,7 @@ final class CDVCallManager: NSObject {
     
     static let CallsChangedNotification = Notification.Name("CDVCallKitCallsChangedNotification")
     
-    private(set) var calls = [CDVCall]()
+    fileprivate(set) var calls = [CDVCall]()
     
     func callWithUUID(_ uuid: UUID) -> CDVCall? {
         guard let index = calls.index(where: { $0.uuid == uuid }) else {
@@ -83,7 +83,7 @@ final class CDVCallManager: NSObject {
         postCallsChangedNotification()
     }
     
-    private func postCallsChangedNotification() {
+    fileprivate func postCallsChangedNotification() {
         NotificationCenter.default.post(name: type(of: self).CallsChangedNotification, object: self)
     }
     
