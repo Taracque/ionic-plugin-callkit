@@ -72,7 +72,7 @@
     <!-- android -->
 	<platform name="android">
 		<config-file target="config.xml" parent="/*">
-			<feature name="Echo">
+			<feature name="CallKit">
 				<param name="android-package" value="hu.taracque.ionic.plugin.CallKit"/>
 			</feature>
 		</config-file>

@@ -27,12 +27,6 @@ public class CallKit extends CordovaPlugin {
     public static PowerManager powerManager;
     public static PowerManager.WakeLock wakeLock;
 
-	/**
-	 * Constructor
-	 */
-	public CallKit() {
-	}
-
 	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
@@ -79,7 +73,9 @@ public class CallKit extends CordovaPlugin {
             }
 
             return true;
-        } 
+        }
+
+		return false;
 
 	}
 	
@@ -92,7 +88,7 @@ public class CallKit extends CordovaPlugin {
     	String name = args.getString(0);
     	boolean hasVideo = args.getBoolean(1);
 
-    	String uuid = UUID.randomUUID().toString();
+    	final String uuid = UUID.randomUUID().toString();
 
 		cordova.getActivity().runOnUiThread(new Runnable() {
 			@Override
