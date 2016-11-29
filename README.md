@@ -2,7 +2,7 @@
 Ionic/Cordova plugin for CallKit
 On Android it mimics CallKit calls, but the callscreen itself should be displayed by the Ionic/Cordova app.
 
-Use www/media/Ringtone.caf as ringtone on iOS, www/media/Ringtone.mp3 on android.
+Use www/media/Ringtone.caf as ringtone on iOS (optional), www/media/Ringtone.mp3 on android (required).
 
 Exmaple:
 

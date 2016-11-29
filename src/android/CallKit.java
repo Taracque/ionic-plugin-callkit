@@ -88,7 +88,7 @@ public class CallKit extends CordovaPlugin {
             
             return true;
         }
-
+        
         return false;
         
     }
@@ -103,7 +103,7 @@ public class CallKit extends CordovaPlugin {
         boolean hasVideo = args.getBoolean(1);
         
         final String uuid = UUID.randomUUID().toString();
-
+        
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -114,7 +114,7 @@ public class CallKit extends CordovaPlugin {
                 window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
             }
         });
-
+        
         if(wakeLock.isHeld()) {
             wakeLock.release();
         }
@@ -141,18 +141,19 @@ public class CallKit extends CordovaPlugin {
                 vibrate = true;
             } else if (1 == Settings.System.getInt(ctx.getContentResolver(), "vibrate_when_ringing", 0)) //vibrate on
                 vibrate = true;
+            
             vibrator = (Vibrator) ctx.getSystemService(Context.VIBRATOR_SERVICE);
             if (vibrate) {
                 vibrator.vibrate(new long[] {0, 1000, 1000}, 0);
             }
             
         } catch (Exception e) {
-            Log.v(TAG, "CallKit asset management error: " + e.getMessage());
+            Log.v(TAG, "CallKit error: " + e.getMessage());
         }
         
         callbackContext.success(uuid);
     }
-
+    
     private synchronized void finishRing(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         if(ringtone.isPlaying()) {
             ringtone.stop();
@@ -161,10 +162,10 @@ public class CallKit extends CordovaPlugin {
         
         callbackContext.success();
     }
-
+    
     private synchronized void endCall(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         String uuid = args.getString(0);
-
+        
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -175,7 +176,7 @@ public class CallKit extends CordovaPlugin {
                 window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             }
         });
-
+        
         if(wakeLock.isHeld()) {
             wakeLock.release();
         }
