@@ -78,6 +78,11 @@
 		</config-file>
 
 		<source-file src="src/android/CallKit.java" target-dir="src/hu/taracque/ionic/plugin" />
+
+		<config-file target="AndroidManifest.xml" parent="/manifest">
+			<uses-permission android:name="android.permission.WAKE_LOCK" />
+		    <uses-permission android:name="android.permission.VIBRATE"/>
+        </config-gile>
 	</platform>
 
 </plugin>
