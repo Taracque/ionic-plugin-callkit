@@ -82,11 +82,9 @@ $ionicCallKit.reportIncomingCall(name,isVideo,onSuccess);
 ```
 
 to activate the call screen.
-name : String = the caller name, which should displayed on the callscreen
-
-isVideo : boolean = set to true if this call can be a video call.
-
-onSuccess : function(uuid) a function where the call's uuid will be provided. This uuid should be used when calling endCall function
+* name : String = the caller name, which should displayed on the callscreen
+* isVideo : boolean = set to true if this call can be a video call.
+* onSuccess : function(uuid) a function where the call's uuid will be provided. This uuid should be used when calling endCall function
 
 Use
 
@@ -96,7 +94,7 @@ $ionicCallKit.endCall(uuid);
 
 to let the system know, the call is ended.
 
-uuid : String = Uniquie identifier of the call. In case of incoming call, it is provided by the reportIncomingCall onSuccess callback.
+* uuid : String = Uniquie identifier of the call. In case of incoming call, it is provided by the reportIncomingCall onSuccess callback.
 
 On android the callscreen should be displayed by the app. Use
 
