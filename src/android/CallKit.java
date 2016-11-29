@@ -103,13 +103,18 @@ public class CallKit extends CordovaPlugin {
         boolean hasVideo = args.getBoolean(1);
         
         final String uuid = UUID.randomUUID().toString();
-        
-        Window window = cordova.getActivity().getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-        
+
+        cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Window window = cordova.getActivity().getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+                window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+                window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+            }
+        });
+
         if(wakeLock.isHeld()) {
             wakeLock.release();
         }
@@ -159,12 +164,17 @@ public class CallKit extends CordovaPlugin {
 
     private synchronized void endCall(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         String uuid = args.getString(0);
-        
-        Window window = cordova.getActivity().getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Window window = cordova.getActivity().getWindow();
+                window.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+                window.clearFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+                window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            }
+        });
 
         if(wakeLock.isHeld()) {
             wakeLock.release();
