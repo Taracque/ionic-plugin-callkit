@@ -38,11 +38,11 @@ CallKit.prototype.endCall = function(uuid) {
 	exec(successCallback, errorCallback, 'CallKit', 'endCall', [uuid] );
 };
 
-CallKit.prototype.finishRing = function(uuid) {
+CallKit.prototype.finishRing = function() {
 	var errorCallback = function() {};
 	var successCallback = function() {};
 
-	exec(successCallback, errorCallback, 'CallKit', 'finishRing', [uuid] );
+	exec(successCallback, errorCallback, 'CallKit', 'finishRing', [] );
 };
 
 if (typeof module != 'undefined' && module.exports) {

@@ -26,6 +26,16 @@ Exmaple:
 			if ((typeof CallKit !== "undefined") && (callKit)) {
 				callKit.reportIncomingCall(name,isVideo);
 			}
+		},
+		endCall : function(uuid) {
+			if ((typeof CallKit !== "undefined") && (callKit)) {
+				callKit.endCall(uuid);
+			}
+		},
+		finishRing : function() {
+			if ((typeof CallKit !== "undefined") && (callKit)) {
+				callKit.finishRing();
+			}
 		}
 	};
 }])
@@ -55,7 +65,7 @@ obj has the following properties:
 * "endDate" : when the call is ended? String (ISO8601 format date time)
 * "connectDate" : when the call is connected? String (ISO8601 format date time)
 * "connectingDate" : when the call started to connect? String (ISO8601 format date time)
-* "duration" : call duration? Double
+* "duration" : call duration Double
 
 ```javascript
 audioSystem = function(message) {
