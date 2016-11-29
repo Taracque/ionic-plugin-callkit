@@ -1,5 +1,8 @@
 # ionic-plugin-callkit
 Ionic/Cordova plugin for CallKit
+On Android it mimics CallKit calls, but the callscreen itself should be displayed by the Ionic/Cordova app.
+
+Use www/media/Ringtone.caf as ringtone on iOS, www/media/Ringtone.mp3 on android.
 
 Exmaple:
 
@@ -80,3 +83,11 @@ $ionicCallKit.endCall(uuid);
 
 to let the system know, the call is ended.
 uuid : String = Uniquie identifier of the call. In case of incoming call, it is provided by the reportIncomingCall onSuccess callback.
+
+On android only use
+
+```javascript
+$ionicCallKit.finishRing();
+```
+
+to stop the ringtone playing.
