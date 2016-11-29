@@ -38,6 +38,13 @@ CallKit.prototype.endCall = function(uuid) {
 	exec(successCallback, errorCallback, 'CallKit', 'endCall', [uuid] );
 };
 
+CallKit.prototype.finishRing = function(uuid) {
+	var errorCallback = function() {};
+	var successCallback = function() {};
+
+	exec(successCallback, errorCallback, 'CallKit', 'finishRing', [uuid] );
+};
+
 if (typeof module != 'undefined' && module.exports) {
 	module.exports = CallKit;
 }

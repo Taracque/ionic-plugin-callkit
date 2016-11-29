@@ -78,7 +78,17 @@ public class CallKit extends CordovaPlugin {
             
             return true;
         }
-        
+        else if (action.equals("finishRing")) {
+            try {
+                this.finishRing(args, callbackContext);
+            }
+            catch (Exception exception) {
+                callbackContext.error("CallKit uncaught exception: " + exception.getMessage());
+            }
+            
+            return true;
+        }
+
         return false;
         
     }
@@ -137,7 +147,16 @@ public class CallKit extends CordovaPlugin {
         
         callbackContext.success(uuid);
     }
-    
+
+    private synchronized void finishRing(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        if(ringtone.isPlaying()) {
+            ringtone.stop();
+        }
+        vibrator.cancel();
+        
+        callbackContext.success();
+    }
+
     private synchronized void endCall(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         String uuid = args.getString(0);
         
@@ -146,15 +165,12 @@ public class CallKit extends CordovaPlugin {
         window.clearFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        
-        if(ringtone.isPlaying()) {
-            ringtone.stop();
-        }
-        vibrator.cancel();
-        
+
         if(wakeLock.isHeld()) {
             wakeLock.release();
         }
+        
+        finishRing(args,callbackContext);
         
         callbackContext.success();
     }

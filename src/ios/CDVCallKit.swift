@@ -77,6 +77,19 @@
         )
     }
 
+    func finishRing(_ command:CDVInvokedUrlCommand) {
+        var pluginResult = CDVPluginResult(
+            status : CDVCommandStatus_OK
+        )
+
+        pluginResult?.setKeepCallbackAs(false)
+        self.commandDelegate!.send(
+            pluginResult,
+            callbackId: command.callbackId
+        )
+        /* does nothing on iOS */
+    }
+
     func endCall(_ command:CDVInvokedUrlCommand) {
         self.commandDelegate.run(inBackground: {
             let uuid = UUID(uuidString: command.arguments[0] as? String ?? "")
