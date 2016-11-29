@@ -19,6 +19,7 @@
 -->
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android"
     id="ionic-plugin-callkit"
     version="0.0.1">
 
@@ -73,7 +74,7 @@
 	<platform name="android">
 		<config-file target="config.xml" parent="/*">
 			<feature name="CallKit">
-				<param name="android-package" value="hu.taracque.ionic.plugin.CallKit"/>
+				<param name="android-package" value="hu.taracque.ionic.plugin.CallKit" />
 			</feature>
 		</config-file>
 
@@ -81,8 +82,8 @@
 
 		<config-file target="AndroidManifest.xml" parent="/manifest">
 			<uses-permission android:name="android.permission.WAKE_LOCK" />
-		    <uses-permission android:name="android.permission.VIBRATE"/>
-        </config-gile>
+		    <uses-permission android:name="android.permission.VIBRATE" />
+        </config-file>
 	</platform>
 
 </plugin>
