@@ -36,7 +36,7 @@ public class CallKit extends CordovaPlugin {
         super.initialize(cordova, webView);
         
         powerManager = (PowerManager) cordova.getActivity().getSystemService(Context.POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock((PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE), "TAG");
+        wakeLock = powerManager.newWakeLock((PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE), TAG);
         
         Log.v(TAG, "Init CallKit");
     }
