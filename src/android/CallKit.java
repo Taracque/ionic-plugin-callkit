@@ -135,15 +135,15 @@ public class CallKit extends CordovaPlugin {
             
             AudioManager audioManager = (AudioManager) cordova.getActivity().getApplication().getSystemService(Context.AUDIO_SERVICE);
             
-            ringtone = new MediaPlayer();
             Context ctx = cordova.getActivity().getApplicationContext();
             AssetManager am = ctx.getResources().getAssets();
             
             AssetFileDescriptor afd = am.openFd("www/media/Ringtone.mp3");
             
+            ringtone = new MediaPlayer();
+            ringtone.setAudioStreamType(AudioManager.STREAM_RING);
             ringtone.setDataSource( afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             ringtone.setLooping(true);
-            ringtone.setAudioStreamType(AudioManager.STREAM_RING);
             ringtone.setVolume( (float) (audioManager.getStreamVolume(AudioManager.STREAM_RING) / audioManager.getStreamMaxVolume(AudioManager.STREAM_RING)), (float) (audioManager.getStreamVolume(AudioManager.STREAM_RING) / audioManager.getStreamMaxVolume(AudioManager.STREAM_RING)));
             ringtone.prepare();
             ringtone.start();
