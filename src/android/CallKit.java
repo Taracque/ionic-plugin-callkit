@@ -5,15 +5,24 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaInterface;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.PowerManager;
 
 import android.os.Vibrator;
 import android.provider.Settings;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import android.view.Window;
@@ -26,10 +35,12 @@ import java.util.UUID;
 
 public class CallKit extends CordovaPlugin {
     public static final String TAG = "CallKit";
+
     public static PowerManager powerManager;
     public static PowerManager.WakeLock wakeLock;
     private static MediaPlayer ringtone;
     private static Vibrator vibrator;
+    private static String callName;
     
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -99,7 +110,7 @@ public class CallKit extends CordovaPlugin {
     }
     
     private synchronized void reportIncomingCall(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
-        String name = args.getString(0);
+        callName = args.getString(0);
         boolean hasVideo = args.getBoolean(1);
         
         final String uuid = UUID.randomUUID().toString();
@@ -153,8 +164,47 @@ public class CallKit extends CordovaPlugin {
         
         callbackContext.success(uuid);
     }
-    
+
+    private void notifyUser(String uuid) {
+        String appName;
+        ApplicationInfo app = null;
+
+        Context context = cordova.getActivity().getApplicationContext();
+        PackageManager packageManager = cordova.getActivity().getPackageManager();
+
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        try {
+            app = packageManager.getApplicationInfo(cordova.getActivity().getPackageName(), 0);
+            appName = (String)packageManager.getApplicationLabel(app);
+        } catch (PackageManager.NameNotFoundException e) {
+            appName = "Incoming";
+            e.printStackTrace();
+        }
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
+            .setContentTitle( appName + " call missed" )
+            .setContentText( callName )
+            .setSound( defaultSoundUri );
+
+        int resID = context.getResources().getIdentifier("callkit_missed_call", "drawable", cordova.getActivity().getPackageName());
+        if (resID != 0) {
+            notificationBuilder.setSmallIcon(resID);
+        } else {
+            notificationBuilder.setSmallIcon(app.icon);
+        }
+        notificationBuilder.setLargeIcon( BitmapFactory.decodeResource( context.getResources(), app.icon ) );
+
+        PendingIntent contentIntent = PendingIntent.getBroadcast(context, 0, new Intent(context, CallKitReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
+        notificationBuilder.setContentIntent(contentIntent);
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(uuid.hashCode(), notificationBuilder.build());
+    }    
+
     private synchronized void finishRing(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        String uuid = args.getString(0);
+
         if(ringtone.isPlaying()) {
             ringtone.stop();
         }
@@ -165,7 +215,8 @@ public class CallKit extends CordovaPlugin {
     
     private synchronized void endCall(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         String uuid = args.getString(0);
-        
+        boolean notify = args.getBoolean(1);
+
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -182,7 +233,11 @@ public class CallKit extends CordovaPlugin {
         }
         
         finishRing(args,callbackContext);
-        
+
+        if (notify) {
+            this.notifyUser(uuid);
+        }
+
         callbackContext.success();
     }
     

@@ -28,9 +28,9 @@ Exmaple:
 				callKit.reportIncomingCall(name,isVideo);
 			}
 		},
-		endCall : function(uuid) {
+		endCall : function(uuid,notify) {
 			if ((typeof CallKit !== "undefined") && (callKit)) {
-				callKit.endCall(uuid);
+				callKit.endCall(uuid,notify);
 			}
 		},
 		finishRing : function() {
@@ -89,17 +89,20 @@ to activate the call screen.
 Use
 
 ```javascript
-$ionicCallKit.endCall(uuid);
+$ionicCallKit.endCall(uuid,notify);
 ```
 
 to let the system know, the call is ended.
 
 * uuid : String = Uniquie identifier of the call. In case of incoming call, it is provided by the reportIncomingCall onSuccess callback.
+* notify : Boolean = If true, sends a local notification to the system about the missed call.
 
 On android the callscreen should be displayed by the app. Use
 
 ```javascript
-$ionicCallKit.finishRing();
+$ionicCallKit.finishRing(uuid,notify);
 ```
 
-to stop the ringtone playing (either when the call was accepted or was rejected).
+to stop the ringtone playing.
+
+* uuid : String = Uniquie identifier of the call. In case of incoming call, it is provided by the reportIncomingCall onSuccess callback.

@@ -31,18 +31,18 @@ CallKit.prototype.reportIncomingCall = function(name,isVideo,onSuccess) {
 	exec(successCallback, errorCallback, 'CallKit', 'reportIncomingCall', [name, isVideo] );
 };
 
-CallKit.prototype.endCall = function(uuid) {
+CallKit.prototype.endCall = function(uuid,notify) {
 	var errorCallback = function() {};
 	var successCallback = function() {};
 
-	exec(successCallback, errorCallback, 'CallKit', 'endCall', [uuid] );
+	exec(successCallback, errorCallback, 'CallKit', 'endCall', [uuid, notify] );
 };
 
-CallKit.prototype.finishRing = function() {
+CallKit.prototype.finishRing = function(uuid) {
 	var errorCallback = function() {};
 	var successCallback = function() {};
 
-	exec(successCallback, errorCallback, 'CallKit', 'finishRing', [] );
+	exec(successCallback, errorCallback, 'CallKit', 'finishRing', [uuid] );
 };
 
 if (typeof module != 'undefined' && module.exports) {

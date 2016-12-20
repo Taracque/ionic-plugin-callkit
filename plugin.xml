@@ -21,7 +21,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
     id="ionic-plugin-callkit"
-    version="0.0.2">
+    version="0.0.3">
 
     <name>CallKit</name>
 
@@ -79,11 +79,20 @@
 		</config-file>
 
 		<source-file src="src/android/CallKit.java" target-dir="src/hu/taracque/ionic/plugin" />
+		<source-file src="src/android/CallKitReceiver.java" target-dir="src/hu/taracque/ionic/plugin" />
 
 		<config-file target="AndroidManifest.xml" parent="/manifest">
 			<uses-permission android:name="android.permission.WAKE_LOCK" />
 		    <uses-permission android:name="android.permission.VIBRATE" />
         </config-file>
+
+        <receiver android:name="hu.taracque.ionic.plugin.CallKitReceiver" />
+
+        <resource-file src="src/android/res/drawable-hdpi/callkit_missed_call.png" target="res/drawable-hdpi/callkit_missed_call.png" />
+        <resource-file src="src/android/res/drawable-mdpi/callkit_missed_call.png" target="res/drawable-mdpi/callkit_missed_call.png" />
+        <resource-file src="src/android/res/drawable-xhdpi/callkit_missed_call.png" target="res/drawable-xhdpi/callkit_missed_call.png" />
+        <resource-file src="src/android/res/drawable-xxhdpi/callkit_missed_call.png" target="res/drawable-xxhdpi/callkit_missed_call.png" />
+        <resource-file src="src/android/res/drawable-xxxhdpi/callkit_missed_call.png" target="res/drawable-xxxhdpi/callkit_missed_call.png" />
 	</platform>
 
 </plugin>
