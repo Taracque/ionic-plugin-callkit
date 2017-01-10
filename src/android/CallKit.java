@@ -144,7 +144,7 @@ public class CallKit extends CordovaPlugin {
             ringtone.setAudioStreamType(AudioManager.STREAM_RING);
             ringtone.setDataSource( afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             ringtone.setLooping(true);
-            ringtone.setVolume( (float) (audioManager.getStreamVolume(AudioManager.STREAM_RING) / audioManager.getStreamMaxVolume(AudioManager.STREAM_RING)), (float) (audioManager.getStreamVolume(AudioManager.STREAM_RING) / audioManager.getStreamMaxVolume(AudioManager.STREAM_RING)));
+            ringtone.setVolume( ((float) audioManager.getStreamVolume(AudioManager.STREAM_RING)) / audioManager.getStreamMaxVolume(AudioManager.STREAM_RING), ((float) audioManager.getStreamVolume(AudioManager.STREAM_RING)) / audioManager.getStreamMaxVolume(AudioManager.STREAM_RING));
             ringtone.prepare();
             ringtone.start();
             
