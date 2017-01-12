@@ -12,13 +12,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.PowerManager;
+import android.os.Build;
 
 import android.os.Vibrator;
 import android.provider.Settings;
@@ -104,7 +105,28 @@ public class CallKit extends CordovaPlugin {
     }
 
     private synchronized void register(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
-        /* Placeholder */
+        /* initialize the ringtone */
+        Context ctx = cordova.getActivity().getBaseContext();
+        Uri ringtoneUri;
+
+        int ringtoneID = ctx.getResources().getIdentifier("ringtone","raw", ctx.getPackageName());
+        if (ringtoneID != 0 ) {
+            ringtoneUri = Uri.parse("android.resource://" + ctx.getPackageName() + "/" + ringtoneID);
+        } else {
+            ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+        }
+
+        ringtone = RingtoneManager.getRingtone(ctx, ringtoneUri);
+        if (Build.VERSION.SDK_INT >= 21) {
+            AudioAttributes aa = new AudioAttributes.Builder()
+                    .setFlags(AudioAttributes.USAGE_NOTIFICATION_RINGTONE | AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_REQUEST)
+                    .build();
+            ringtone.setAudioAttributes(aa);
+        } else {
+            ringtone.setStreamType(RingtoneManager.TYPE_RINGTONE);
+        }
+
+
         callbackContext.success();
     }
 
@@ -147,16 +169,6 @@ public class CallKit extends CordovaPlugin {
             AudioManager audioManager = (AudioManager) cordova.getActivity().getApplication().getSystemService(Context.AUDIO_SERVICE);
 
             Context ctx = cordova.getActivity().getBaseContext();
-            AssetManager am = ctx.getResources().getAssets();
-
-            int ringtoneID = ctx.getResources().getIdentifier("ringtone","raw", ctx.getPackageName());
-            if (ringtoneID != 0 ) {
-                ringtoneUri = Uri.parse("android.resource://" + ctx.getPackageName() + "/" + ringtoneID);
-            } else {
-                ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-            }
-
-            ringtone = RingtoneManager.getRingtone(ctx, ringtoneUri);
 
             ringtone.play();
 
