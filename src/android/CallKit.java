@@ -11,11 +11,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
+import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.PowerManager;
@@ -35,10 +35,10 @@ import java.util.UUID;
 
 public class CallKit extends CordovaPlugin {
     public static final String TAG = "CallKit";
-
+    
     public static PowerManager powerManager;
     public static PowerManager.WakeLock wakeLock;
-    private static MediaPlayer ringtone;
+    private static Ringtone ringtone;
     private static Vibrator vibrator;
     private static String callName;
     
@@ -118,11 +118,12 @@ public class CallKit extends CordovaPlugin {
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Window window = cordova.getActivity().getWindow();
-                window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-                window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-                window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+                cordova.getActivity().getWindow().addFlags(
+                                                           WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                                                           WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
+                                                           WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                                                           WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                                                           );
             }
         });
         
@@ -132,21 +133,23 @@ public class CallKit extends CordovaPlugin {
         wakeLock.acquire();
         try {
             boolean vibrate = false;
+            Uri ringtoneUri;
             
             AudioManager audioManager = (AudioManager) cordova.getActivity().getApplication().getSystemService(Context.AUDIO_SERVICE);
             
-            Context ctx = cordova.getActivity().getApplicationContext();
+            Context ctx = cordova.getActivity().getBaseContext();
             AssetManager am = ctx.getResources().getAssets();
             
-            AssetFileDescriptor afd = am.openFd("www/media/Ringtone.mp3");
+            int ringtoneID = ctx.getResources().getIdentifier("ringtone","raw", ctx.getPackageName());
+            if (ringtoneID != 0 ) {
+                ringtoneUri = Uri.parse("android.resource://" + ctx.getPackageName() + "/" + ringtoneID);
+            } else {
+                ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+            }
             
-            ringtone = new MediaPlayer();
-            ringtone.setAudioStreamType(AudioManager.STREAM_RING);
-            ringtone.setDataSource( afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-            ringtone.setLooping(true);
-            ringtone.setVolume( ((float) audioManager.getStreamVolume(AudioManager.STREAM_RING)) / audioManager.getStreamMaxVolume(AudioManager.STREAM_RING), ((float) audioManager.getStreamVolume(AudioManager.STREAM_RING)) / audioManager.getStreamMaxVolume(AudioManager.STREAM_RING));
-            ringtone.prepare();
-            ringtone.start();
+            ringtone = RingtoneManager.getRingtone(ctx, ringtoneUri);
+            
+            ringtone.play();
             
             if(audioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE){
                 vibrate = true;
@@ -164,16 +167,16 @@ public class CallKit extends CordovaPlugin {
         
         callbackContext.success(uuid);
     }
-
+    
     private void notifyUser(String uuid) {
         String appName;
         ApplicationInfo app = null;
-
+        
         Context context = cordova.getActivity().getApplicationContext();
         PackageManager packageManager = cordova.getActivity().getPackageManager();
-
+        
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
+        
         try {
             app = packageManager.getApplicationInfo(cordova.getActivity().getPackageName(), 0);
             appName = (String)packageManager.getApplicationLabel(app);
@@ -181,12 +184,12 @@ public class CallKit extends CordovaPlugin {
             appName = "Incoming";
             e.printStackTrace();
         }
-
+        
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
-            .setContentTitle( appName + " call missed" )
-            .setContentText( callName )
-            .setSound( defaultSoundUri );
-
+        .setContentTitle( appName + " call missed" )
+        .setContentText( callName )
+        .setSound( defaultSoundUri );
+        
         int resID = context.getResources().getIdentifier("callkit_missed_call", "drawable", cordova.getActivity().getPackageName());
         if (resID != 0) {
             notificationBuilder.setSmallIcon(resID);
@@ -194,17 +197,17 @@ public class CallKit extends CordovaPlugin {
             notificationBuilder.setSmallIcon(app.icon);
         }
         notificationBuilder.setLargeIcon( BitmapFactory.decodeResource( context.getResources(), app.icon ) );
-
+        
         PendingIntent contentIntent = PendingIntent.getBroadcast(context, 0, new Intent(context, CallKitReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
         notificationBuilder.setContentIntent(contentIntent);
-
+        
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(uuid.hashCode(), notificationBuilder.build());
-    }    
-
+    }
+    
     private synchronized void finishRing(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         String uuid = args.getString(0);
-
+        
         if(ringtone.isPlaying()) {
             ringtone.stop();
         }
@@ -216,15 +219,15 @@ public class CallKit extends CordovaPlugin {
     private synchronized void endCall(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         String uuid = args.getString(0);
         boolean notify = args.getBoolean(1);
-
+        
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Window window = cordova.getActivity().getWindow();
-                window.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-                window.clearFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-                window.clearFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-                window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                cordova.getActivity().getWindow().clearFlags(
+                                                             WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                                                             WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+                                                             WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                                                             WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             }
         });
         
@@ -233,11 +236,11 @@ public class CallKit extends CordovaPlugin {
         }
         
         finishRing(args,callbackContext);
-
+        
         if (notify) {
             this.notifyUser(uuid);
         }
-
+        
         callbackContext.success();
     }
     
