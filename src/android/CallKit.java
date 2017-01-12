@@ -7,6 +7,7 @@ import org.apache.cordova.CordovaInterface;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -117,15 +118,15 @@ public class CallKit extends CordovaPlugin {
             @Override
             public void run() {
                 try {
-                    Class mainActivityClass = Class.forName(cordova.getActivity().getApplicationContext().getPackageName() + ".MainActivity");
+                    String packageName = cordova.getActivity().getApplicationContext().getPackageName();
 
-                    Intent intent = new Intent(cordova.getActivity(), mainActivityClass);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    cordova.getActivity().startActivity(intent);
-                } catch (ClassNotFoundException e ) {
+                    Intent intent = new Intent("android.intent.action.MAIN");
+                    intent.setComponent(new ComponentName(packageName, packageName + ".MainActivity"));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    cordova.getActivity().getApplicationContext().startActivity(intent);
+                } catch (Exception e)  {
                     Log.v(TAG, "CallKit error: " + e.getMessage());
                 }
-
                 cordova.getActivity().getWindow().addFlags(
                     WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
                     WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
