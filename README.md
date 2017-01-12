@@ -1,7 +1,7 @@
 # ionic-plugin-callkit
 Ionic/Cordova plugin for CallKit
 
-On Android it mimics CallKit calls, but the callscreen itself should be displayed by the Ionic/Cordova app.
+On Android it mimics CallKit calls, but the callscreen itself should be displayed by the Ionic/Cordova app. On Android the main activity must be called as "MainActivity". You can check this in your AndroidManifest.xml file, the first activity tag under application tag should have android:name="MainActivity" attribute.
 
 Use www/media/Ringtone.caf as ringtone on iOS (optional), res/raw/ringtone.mp3 or res/raw/ringtone.ogg on android (filename is lowercase, if not found then plays the default system ring, use ANDROID_LOOP metadata to loop the ogg ringtone!).
 
