@@ -125,6 +125,7 @@ public class CallKit extends CordovaPlugin {
         } else {
             ringtone.setStreamType(RingtoneManager.TYPE_RINGTONE);
         }
+        ringtone.stop();
 
         callbackContext.success();
     }
@@ -169,7 +170,6 @@ public class CallKit extends CordovaPlugin {
 
             Context ctx = cordova.getActivity().getBaseContext();
 
-            ringtone.stop();
             ringtone.play();
 
             if(audioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE){
