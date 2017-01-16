@@ -169,6 +169,7 @@ public class CallKit extends CordovaPlugin {
 
             Context ctx = cordova.getActivity().getBaseContext();
 
+            ringtone.stop();
             ringtone.play();
 
             if(audioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE){
