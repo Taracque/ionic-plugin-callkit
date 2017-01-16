@@ -126,7 +126,6 @@ public class CallKit extends CordovaPlugin {
             ringtone.setStreamType(RingtoneManager.TYPE_RINGTONE);
         }
 
-
         callbackContext.success();
     }
 
@@ -144,7 +143,7 @@ public class CallKit extends CordovaPlugin {
 
                     Intent intent = new Intent("android.intent.action.MAIN");
                     intent.setComponent(new ComponentName(packageName, packageName + ".MainActivity"));
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     cordova.getActivity().getApplicationContext().startActivity(intent);
                 } catch (Exception e)  {
                     Log.v(TAG, "CallKit error: " + e.getMessage());
