@@ -85,7 +85,8 @@
         let name = command.arguments[0] as? String ?? ""
         let isVideo = (command.arguments[1] as! Bool)
         
-        self.callManager?.startCall(handle: name, video: isVideo)
+        let uuid = UUID()
+        self.callManager?.startCall(uuid, handle: name, video: isVideo)
         
         pluginResult = CDVPluginResult(
             status: CDVCommandStatus_OK,

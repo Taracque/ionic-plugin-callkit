@@ -12,9 +12,9 @@ final class CDVCallManager: NSObject {
     
     // MARK: Actions
     
-    func startCall(_ handle: String, video: Bool = false) {
+    func startCall(_ uuid: UUID, handle: String, video: Bool = false) {
         let handle = CXHandle(type: .generic, value: handle)
-        let startCallAction = CXStartCallAction(call: UUID(), handle: handle)
+        let startCallAction = CXStartCallAction(call: uuid, handle: handle)
         
         startCallAction.isVideo = video
         
