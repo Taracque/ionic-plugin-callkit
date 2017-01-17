@@ -13,7 +13,7 @@ final class CDVCallManager: NSObject {
     // MARK: Actions
     
     func startCall(_ handle: String, video: Bool = false) {
-        let handle = CXHandle(type: .phoneNumber, value: handle)
+        let handle = CXHandle(type: .generic, value: handle)
         let startCallAction = CXStartCallAction(call: UUID(), handle: handle)
         
         startCallAction.isVideo = video

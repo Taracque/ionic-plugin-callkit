@@ -77,6 +77,28 @@
         )
     }
 
+    func startCall(_ command:CDVInvokedUrlCommand) {
+        var pluginResult = CDVPluginResult(
+            status : CDVCommandStatus_ERROR
+        )
+        
+        let name = command.arguments[0] as? String ?? ""
+        let isVideo = (command.arguments[1] as! Bool)
+        
+        self.callManager?.startCall(handle: name, video: isVideo)
+        
+        pluginResult = CDVPluginResult(
+            status: CDVCommandStatus_OK,
+            messageAs : uuid.uuidString
+        )
+        pluginResult?.setKeepCallbackAs(false)
+        
+        self.commandDelegate!.send(
+            pluginResult,
+            callbackId: command.callbackId
+        )
+    }
+
     func finishRing(_ command:CDVInvokedUrlCommand) {
         var pluginResult = CDVPluginResult(
             status : CDVCommandStatus_OK
