@@ -189,6 +189,17 @@ public class CallKit extends CordovaPlugin {
         callbackContext.success(uuid);
     }
 
+    private synchronized void startCall(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        callName = args.getString(0);
+        boolean isVideo = args.getBoolean(1);
+
+        final String uuid = UUID.randomUUID().toString();
+
+        /* do nothing... */
+
+        callbackContext.success(uuid);
+    }
+
     private void notifyUser(String uuid) {
         String appName;
         ApplicationInfo app = null;
