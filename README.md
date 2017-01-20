@@ -3,13 +3,15 @@ Ionic/Cordova plugin for CallKit
 
 On Android it mimics CallKit calls, but the callscreen itself should be displayed by the Ionic/Cordova app. On Android the main activity must be called as "MainActivity". You can check this in your AndroidManifest.xml file, the first activity tag under application tag should have android:name="MainActivity" attribute.
 
-Use www/media/Ringtone.caf as ringtone on iOS (optional), res/raw/ringtone.mp3 or res/raw/ringtone.ogg on android (filename is lowercase, if not found then plays the default system ring, use ANDROID_LOOP metadata to loop the ogg ringtone!).
+On iOS use www/media/Ringtone.caf as ringtone on iOS (optional, uses system default ringtone if not found) automatically looped
+On Android res/raw/ringtone.mp3 or res/raw/ringtone.ogg is used (filename is lowercase, if not found then plays the default system ring), use ANDROID_LOOP metadata to loop the ogg ringtone
 
-Exmaple:
+Exmaple (only one call tracked at a time, this code is just a hint):
 
 ```javascript
 .factory('$ionicCallKit', ['$q', function($q) {
 	var callKit;
+    var callUUID;
 
 	return {
 		register : function( callChanged, audioSystem ) {
@@ -25,12 +27,21 @@ Exmaple:
 		},
 		reportIncomingCall : function(name,isVideo) {
 			if ((typeof CallKit !== "undefined") && (callKit)) {
-				callKit.reportIncomingCall(name,isVideo);
+				callKit.reportIncomingCall(name,isVideo,function(uuid) {
+                    callUUID = uuid;
+                });
 			}
 		},
-		endCall : function(uuid,notify) {
+        startCall : function(name,isVideo) {
 			if ((typeof CallKit !== "undefined") && (callKit)) {
-				callKit.endCall(uuid,notify);
+                startCall(name,isVideo,function(uuid) {
+                    callUUID = uuid;
+                });
+			}
+        },
+		endCall : function(notify) {
+			if ((typeof CallKit !== "undefined") && (callKit)) {
+				callKit.endCall(callUUID,notify);
 			}
 		},
 		finishRing : function() {
