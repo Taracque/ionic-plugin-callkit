@@ -34,9 +34,14 @@ Exmaple (only one call tracked at a time, this code is just a hint):
 		},
         startCall : function(name,isVideo) {
 			if ((typeof CallKit !== "undefined") && (callKit)) {
-                startCall(name,isVideo,function(uuid) {
+                callKit.startCall(name,isVideo,function(uuid) {
                     callUUID = uuid;
                 });
+			}
+        },
+        callConnected : function(uuid) {
+			if ((typeof CallKit !== "undefined") && (callKit)) {
+                callKit.callConnected(callUUID);
 			}
         },
 		endCall : function(notify) {
@@ -101,10 +106,18 @@ to activate the call screen.
 $ionicCallKit.startCall(name,isVideo,onSuccess);
 ```
 
-to report an outgoing call to the system
+to report an initiated outgoing call to the system
 * name : String = the callee name, which should displayed in the call history
 * isVideo : boolean = set to true if this call can be a video call.
-* onSuccess : function(uuid) a function where the call's uuid will be provided. This uuid should be used when calling endCall function
+* onSuccess : function(uuid) a function where the call's uuid will be provided. This uuid should be used when calling callConnected and endCall functions
+
+Use
+
+```javascript
+$ionicCallKit.callConnected(uuid);
+```
+to report the system that the outgoing call is connected.
+* uuid : String = Uniquie identifier of the call.
 
 Use
 

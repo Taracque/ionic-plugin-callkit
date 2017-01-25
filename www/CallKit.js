@@ -40,6 +40,13 @@ CallKit.prototype.startCall = function(name,isVideo,onSuccess) {
 	exec(successCallback, errorCallback, 'CallKit', 'startCall', [name, isVideo] );
 };
 
+CallKit.prototype.callConnected = function(uuid) {
+	var errorCallback = function() {};
+	var successCallback = function() {};
+
+	exec(successCallback, errorCallback, 'CallKit', 'callConnected', [uuid] );
+};
+
 CallKit.prototype.endCall = function(uuid,notify) {
 	var errorCallback = function() {};
 	var successCallback = function() {};
