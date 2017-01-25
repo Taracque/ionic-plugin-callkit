@@ -79,6 +79,26 @@ public class CallKit extends CordovaPlugin {
 
             return true;
         }
+        else if (action.equals("startCall")) {
+            try {
+                this.startCall(args, callbackContext);
+            }
+            catch (Exception exception) {
+                callbackContext.error("CallKit uncaught exception: " + exception.getMessage());
+            }
+            
+            return true;
+        }
+        else if (action.equals("callConnected")) {
+            try {
+                this.callConnected(args, callbackContext);
+            }
+            catch (Exception exception) {
+                callbackContext.error("CallKit uncaught exception: " + exception.getMessage());
+            }
+            
+            return true;
+        }
         else if (action.equals("endCall")) {
             try {
                 this.endCall(args, callbackContext);
@@ -190,6 +210,14 @@ public class CallKit extends CordovaPlugin {
         }
 
         callbackContext.success(uuid);
+    }
+
+    private synchronized void callConnected(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        String uuid = args.getString(0);
+        
+        /* do nothing... */
+        
+        callbackContext.success();
     }
 
     private synchronized void startCall(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
