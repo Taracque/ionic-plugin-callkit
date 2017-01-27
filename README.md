@@ -6,7 +6,7 @@ On Android it mimics CallKit calls, but the callscreen itself should be displaye
 On iOS use www/media/Ringtone.caf as ringtone on iOS (optional, uses system default ringtone if not found) automatically looped
 On Android res/raw/ringtone.mp3 or res/raw/ringtone.ogg is used (filename is lowercase, if not found then plays the default system ring), use ANDROID_LOOP metadata to loop the ogg ringtone
 
-Exmaple (only one call tracked at a time, this code is just a hint):
+Exmaple (only one call tracked at a time, this code is just a hint, see Call Flow description below):
 
 ```javascript
 .factory('$ionicCallKit', ['$q', function($q) {
@@ -116,6 +116,7 @@ Use
 ```javascript
 $ionicCallKit.callConnected(uuid);
 ```
+
 to report the system that the outgoing call is connected.
 * uuid : String = Uniquie identifier of the call.
 
@@ -139,3 +140,17 @@ $ionicCallKit.finishRing(uuid,notify);
 to stop the ringtone playing.
 
 * uuid : String = Uniquie identifier of the call. In case of incoming call, it is provided by the reportIncomingCall onSuccess callback.
+
+Call Flows
+Incoming:
+1. call `reportIncomingCall`
+2. `callChanged` gets called with `hasStartedConnecting=true`
+3. use `finishRing` to finish the ring (only needed on android)
+4. connect the call, and once connected user `callConnected` call
+5. once the call is finished user `endCall`
+
+Outgoing:
+1. call `startCall`
+2. initiate call
+3. once the call is connected use `callConnected`
+4. once the call is finished use `endCall`

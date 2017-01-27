@@ -93,20 +93,17 @@ final class CDVCall {
         // Simulate the call starting successfully
         completion?(true)
         
-        self.hasStartedConnecting = true
+        hasStartedConnecting = true
     }
     
     func connectedCDVCall() {
         // Call has connected
-        self.hasConnected = true
+        hasConnected = true
     }
     
     func answerCDVCall() {
-        /*
-         Simulate the answer becoming connected immediately, since
-         the example app is not backed by a real network service
-         */
-        hasConnected = true
+        // call is answered, start connecting
+        hasStartedConnecting = true
     }
     
     func endCDVCall() {
