@@ -61,9 +61,13 @@
         
         let uuid = UUID()
         let name = command.arguments[0] as? String ?? ""
-        let hasVideo = (command.arguments[1] as! Bool)
+        let hasVideo = command.arguments[1] as? Bool ?? false
+        let supportsGroup = command.arguments[2] as? Bool ?? false
+        let supportsUngroup = command.arguments[3] as? Bool ?? false
+        let supportsDTMF = command.arguments[4] as? Bool ?? false
+        let supportsHold = command.arguments[5] as? Bool ?? false
 
-        providerDelegate?.reportIncomingCall(uuid,handle: name,hasVideo: hasVideo)
+        providerDelegate?.reportIncomingCall(uuid,handle: name,hasVideo: hasVideo,supportsGroup: supportsGroup, supportsUngroup: supportsUngroup,supportsDTMF: supportsDTMF, supportsHold: supportsHold)
         
         pluginResult = CDVPluginResult(
             status: CDVCommandStatus_OK,

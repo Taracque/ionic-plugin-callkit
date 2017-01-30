@@ -25,9 +25,9 @@ Exmaple (only one call tracked at a time, this code is just a hint, see Call Flo
 				return this;
 			}
 		},
-		reportIncomingCall : function(name,isVideo) {
+		reportIncomingCall : function(name,params) {
 			if ((typeof CallKit !== "undefined") && (callKit)) {
-				callKit.reportIncomingCall(name,isVideo,function(uuid) {
+				callKit.reportIncomingCall(name,params,function(uuid) {
                     callUUID = uuid;
                 });
 			}
@@ -94,12 +94,17 @@ message : String = can be startAudio, stopAudio, configureAudio
 Use 
 
 ```javascript
-$ionicCallKit.reportIncomingCall(name,isVideo,onSuccess);
+$ionicCallKit.reportIncomingCall(name,params,onSuccess);
 ```
 
 to activate the call screen.
 * name : String = the caller name, which should displayed on the callscreen
-* isVideo : boolean = set to true if this call can be a video call.
+* params : object with the following keys
+	video : set to true if this call can be a video call
+	group : set to true if call supports grouping (default: false)
+	ungroup : set to true if call supports ungrouping (default: false)
+	dtmf : set to true if call supports dtmf tones (default: false)
+	hold : set to true if call supports hold (default: false)
 * onSuccess : function(uuid) a function where the call's uuid will be provided. This uuid should be used when calling endCall function
 
 ```javascript

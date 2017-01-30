@@ -22,13 +22,29 @@ CallKit.prototype.register = function(callChanged,audioSystem) {
 	exec(successCallback, errorCallback, 'CallKit', 'register' );
 };
 
-CallKit.prototype.reportIncomingCall = function(name,isVideo,onSuccess) {
+CallKit.prototype.reportIncomingCall = function(name,params,onSuccess) {
+	var supportsVideo = true;
+	var supportsGroup = false;
+	var supportsUngroup = false;
+	var supportsDTMF = false;
+	var supportsHold = false;
+	
+	if (typeof params === "boolean") {
+		supportsVideo = params;
+	} else if (typeof params === "object") {
+		supportsVideo = (params.video === true);
+		supportsGroup = (params.group === true);
+		supportsUngroup = (params.ungroup === true);
+		supportsDTMF = (params.dtmf === true);
+		supportsHold = (params.hold === true);
+	}
+
 	var errorCallback = function() {};
 	var successCallback = function(obj) {
 		onSuccess(obj);
 	};
 
-	exec(successCallback, errorCallback, 'CallKit', 'reportIncomingCall', [name, isVideo] );
+	exec(successCallback, errorCallback, 'CallKit', 'reportIncomingCall', [name, supportsVideo, supportsGroup, supportsUngroup, supportsDTMF, supportsHold] );
 };
 
 CallKit.prototype.startCall = function(name,isVideo,onSuccess) {

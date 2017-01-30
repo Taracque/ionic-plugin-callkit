@@ -46,11 +46,15 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
     // MARK: Incoming Calls
     
     /// Use CXProvider to report the incoming call to the system
-    func reportIncomingCall(_ uuid: UUID, handle: String, hasVideo: Bool = false, completion: ((NSError?) -> Void)? = nil) {
+    func reportIncomingCall(_ uuid: UUID, handle: String, hasVideo: Bool = false,supportsGroup: Bool = false, supportsUngroup: Bool = false, supportsDTMF: Bool = false, supportsHold: Bool = false, completion: ((NSError?) -> Void)? = nil) {
         // Construct a CXCallUpdate describing the incoming call, including the caller.
         let update = CXCallUpdate()
         update.remoteHandle = CXHandle(type: .generic, value: handle)
         update.hasVideo = hasVideo
+        update.supportsGrouping = supportsGroup
+        update.supportsUngrouping = supportsUngroup
+        update.supportsDTMF = supportsDTMF
+        update.supportsHolding = supportsHold
         
         // Report the incoming call to the system
         provider.reportNewIncomingCall(with: uuid, update: update) { error in
