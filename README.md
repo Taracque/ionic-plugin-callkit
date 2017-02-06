@@ -6,7 +6,7 @@ On Android it mimics CallKit calls, but the callscreen itself should be displaye
 On iOS use resources/Ringtone.caf as ringtone (optional, uses system default ringtone if not found) automatically looped
 On Android res/raw/ringtone.mp3 or res/raw/ringtone.ogg is used (filename is lowercase, if not found then plays the default system ring), use ANDROID_LOOP metadata to loop the ogg ringtone
 
-Exmaple (only one call tracked at a time, this code is just a hint, see [Call Flow](#Call Flows) description below):
+Exmaple (only one call tracked at a time, this code is just a hint, see [Call Flow](#call-flows) description below):
 
 ```javascript
 .factory('$ionicCallKit', ['$q', function($q) {
@@ -60,13 +60,13 @@ Exmaple (only one call tracked at a time, this code is just a hint, see [Call Fl
 
 # API
 
-use
+Plugin initialization:
 
 ```javascript
 $ionicCallKit.register( callChanged, audioSystem )
 ```
 
-to register the plugin. Where
+Initializes the plugin a register callback codes.
 
 ```javascript
 callChanged = function(obj) {
@@ -74,7 +74,7 @@ callChanged = function(obj) {
 }
 ```
 
-obj has the following properties:
+callback is called with an object, which contains the following properties:
 * "handle" : The handle of the call (the string what is displayed on the phone) String
 * "isOutgoing" : is the call outgoing? Boolean
 * "isOnHold" : is the is on hold? Boolean
