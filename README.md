@@ -148,6 +148,7 @@ to stop the ringtone playing.
 
 Call Flows
 Incoming:
+
 1. call `reportIncomingCall`
 2. `callChanged` gets called with `hasStartedConnecting=true`
 3. use `finishRing` to finish the ring (only needed on android)
@@ -155,6 +156,7 @@ Incoming:
 5. once the call is finished user `endCall`
 
 Outgoing:
+
 1. call `startCall`
 2. initiate call
 3. once the call is connected use `callConnected`
