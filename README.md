@@ -75,6 +75,7 @@ callChanged = function(obj) {
 ```
 
 callback is called with an object, which contains the following properties:
+* "uuid" : The UUID of the call
 * "handle" : The handle of the call (the string what is displayed on the phone) String
 * "isOutgoing" : is the call outgoing? Boolean
 * "isOnHold" : is the is on hold? Boolean

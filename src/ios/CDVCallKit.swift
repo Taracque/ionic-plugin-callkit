@@ -155,6 +155,7 @@
                 
                 resultMessage = [
                     "callbackType" : "callChanged",
+                    "uuid" : call.uuid.uuidString as String? ?? "",
                     "handle" : call.handle as String? ?? "",
                     "isOutgoing" : call.isOutgoing as Bool,
                     "isOnHold" : call.isOnHold as Bool,
