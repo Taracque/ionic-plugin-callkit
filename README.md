@@ -102,11 +102,11 @@ $ionicCallKit.reportIncomingCall(name,params,onSuccess);
 to activate the call screen.
 * name : String = the caller name, which should displayed on the callscreen
 * params : object with the following keys
-	video : set to true if this call can be a video call
-	group : set to true if call supports grouping (default: false)
-	ungroup : set to true if call supports ungrouping (default: false)
-	dtmf : set to true if call supports dtmf tones (default: false)
-	hold : set to true if call supports hold (default: false)
+  * `video` : set to true if this call can be a video call
+  * `group` : set to true if call supports grouping (default: false)
+  * `ungroup` : set to true if call supports ungrouping (default: false)
+  * `dtmf` : set to true if call supports dtmf tones (default: false)
+  * `hold` : set to true if call supports hold (default: false)
 * onSuccess : function(uuid) a function where the call's uuid will be provided. This uuid should be used when calling endCall function
 
 ```javascript
