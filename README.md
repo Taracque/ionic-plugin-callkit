@@ -75,6 +75,7 @@ callChanged = function(obj) {
 ```
 
 callback is called with an object, which contains the following properties:
+* "uuid" : The UUID of the call
 * "handle" : The handle of the call (the string what is displayed on the phone) String
 * "isOutgoing" : is the call outgoing? Boolean
 * "isOnHold" : is the is on hold? Boolean
@@ -102,11 +103,11 @@ $ionicCallKit.reportIncomingCall(name,params,onSuccess);
 to activate the call screen.
 * name : String = the caller name, which should displayed on the callscreen
 * params : object with the following keys
-	video : set to true if this call can be a video call
-	group : set to true if call supports grouping (default: false)
-	ungroup : set to true if call supports ungrouping (default: false)
-	dtmf : set to true if call supports dtmf tones (default: false)
-	hold : set to true if call supports hold (default: false)
+  * `video` : set to true if this call can be a video call
+  * `group` : set to true if call supports grouping (default: false)
+  * `ungroup` : set to true if call supports ungrouping (default: false)
+  * `dtmf` : set to true if call supports dtmf tones (default: false)
+  * `hold` : set to true if call supports hold (default: false)
 * onSuccess : function(uuid) a function where the call's uuid will be provided. This uuid should be used when calling endCall function
 
 ```javascript

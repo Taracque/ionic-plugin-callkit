@@ -39,6 +39,7 @@ module.exports = function (context) {
     var destFile = path.join(iosFolder, projName, 'Resources', 'Ringtone.caf');
     if (fs.existsSync(destFile)) {
       console.log("File exists, not doing anything: " + destFile);
+      deferral.resolve();
     } else {
       var sourceFile = path.join('resources', 'Ringtone.caf');
       fs.readFile(sourceFile, function (err, data) {
