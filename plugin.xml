@@ -84,16 +84,17 @@
 
 		<config-file target="AndroidManifest.xml" parent="/manifest">
 			<uses-permission android:name="android.permission.WAKE_LOCK" />
-		  <uses-permission android:name="android.permission.VIBRATE" />
-    </config-file>
+			<uses-permission android:name="android.permission.VIBRATE" />
+			<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+		</config-file>
 
-    <receiver android:name="hu.taracque.ionic.plugin.CallKitReceiver" />
+		<receiver android:name="hu.taracque.ionic.plugin.CallKitReceiver" />
 
-    <resource-file src="src/android/res/drawable-hdpi/callkit_missed_call.png" target="res/drawable-hdpi/callkit_missed_call.png" />
-    <resource-file src="src/android/res/drawable-mdpi/callkit_missed_call.png" target="res/drawable-mdpi/callkit_missed_call.png" />
-    <resource-file src="src/android/res/drawable-xhdpi/callkit_missed_call.png" target="res/drawable-xhdpi/callkit_missed_call.png" />
-    <resource-file src="src/android/res/drawable-xxhdpi/callkit_missed_call.png" target="res/drawable-xxhdpi/callkit_missed_call.png" />
-    <resource-file src="src/android/res/drawable-xxxhdpi/callkit_missed_call.png" target="res/drawable-xxxhdpi/callkit_missed_call.png" />
+		<resource-file src="src/android/res/drawable-hdpi/callkit_missed_call.png" target="res/drawable-hdpi/callkit_missed_call.png" />
+		<resource-file src="src/android/res/drawable-mdpi/callkit_missed_call.png" target="res/drawable-mdpi/callkit_missed_call.png" />
+		<resource-file src="src/android/res/drawable-xhdpi/callkit_missed_call.png" target="res/drawable-xhdpi/callkit_missed_call.png" />
+		<resource-file src="src/android/res/drawable-xxhdpi/callkit_missed_call.png" target="res/drawable-xxhdpi/callkit_missed_call.png" />
+		<resource-file src="src/android/res/drawable-xxxhdpi/callkit_missed_call.png" target="res/drawable-xxxhdpi/callkit_missed_call.png" />
 	</platform>
 
 </plugin>
