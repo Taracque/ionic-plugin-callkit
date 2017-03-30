@@ -38,7 +38,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
             providerConfiguration.iconTemplateImageData = UIImagePNGRepresentation(iconMaskImage)
         }
         
-        providerConfiguration.ringtoneSound = Bundle.main.path(forResource:"Ringtone", ofType: "caf")
+        providerConfiguration.ringtoneSound = "Ringtone.caf"
         
         return providerConfiguration
     }
