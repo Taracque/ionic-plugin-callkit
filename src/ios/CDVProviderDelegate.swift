@@ -69,7 +69,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
                 self.callManager.addCall(call)
             }
             
-            completion?(error as? NSError)
+            completion?(error as NSError?)
         }
     }
     

@@ -105,7 +105,7 @@
     }
 
     func finishRing(_ command:CDVInvokedUrlCommand) {
-        var pluginResult = CDVPluginResult(
+        let pluginResult = CDVPluginResult(
             status : CDVCommandStatus_OK
         )
 
