@@ -25,8 +25,8 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
     
     /// The app's provider configuration, representing its CallKit capabilities
     static var providerConfiguration: CXProviderConfiguration {
-        let localizedName = Bundle.main.infoDictionary?["CFBundleName"] as? String
-        let providerConfiguration = CXProviderConfiguration(localizedName: localizedName!)
+        let localizedName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? ""
+        let providerConfiguration = CXProviderConfiguration(localizedName: localizedName)
         
         providerConfiguration.supportsVideo = true
         
