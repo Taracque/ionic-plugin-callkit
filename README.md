@@ -96,7 +96,7 @@ audioSystem = function(message) {
 	< your code >
 }
 ```
-message : String = can be startAudio, stopAudio, configureAudio
+* *message: String* - can be `startAudio`, `stopAudio`, `configureAudio`
 
 Use 
 
@@ -105,23 +105,23 @@ $ionicCallKit.reportIncomingCall(name,params,onSuccess);
 ```
 
 to activate the call screen.
-* name : String = the caller name, which should displayed on the callscreen
-* params : object with the following keys
+* *name: String* - the caller name, which should displayed on the callscreen
+* *params: Object* - with the following keys
   * `video` : set to true if this call can be a video call
   * `group` : set to true if call supports grouping (default: false)
   * `ungroup` : set to true if call supports ungrouping (default: false)
   * `dtmf` : set to true if call supports dtmf tones (default: false)
   * `hold` : set to true if call supports hold (default: false)
-* onSuccess : function(uuid) a function where the call's uuid will be provided. This uuid should be used when calling endCall function
+* *onSuccess: function(uuid)* - a function where the call's `uuid` will be provided. This `uuid` should be used when calling `endCall` function.
 
 ```javascript
 $ionicCallKit.startCall(name,isVideo,onSuccess);
 ```
 
 to report an initiated outgoing call to the system
-* name : String = the callee name, which should displayed in the call history
-* isVideo : boolean = set to true if this call can be a video call.
-* onSuccess : function(uuid) a function where the call's uuid will be provided. This uuid should be used when calling callConnected and endCall functions
+* *name: String* - the callee name, which should displayed in the call history.
+* *isVideo: boolean* - set to true if this call can be a video call.
+* *onSuccess: function(uuid)* - a function where the call's `uuid` will be provided. This `uuid` should be used when calling `callConnected` and `endCall` functions.
 
 Use
 
@@ -140,8 +140,8 @@ $ionicCallKit.endCall(uuid,notify);
 
 to let the system know, the call is ended.
 
-* uuid : String = Uniquie identifier of the call. In case of incoming call, it is provided by the reportIncomingCall onSuccess callback.
-* notify : Boolean = If true, sends a local notification to the system about the missed call.
+* *uuid: String* - Uniquie identifier of the call. In case of incoming call, it is provided by the `reportIncomingCall` `onSuccess` callback.
+* *notify: Boolean* - If `true`, sends a local notification to the system about the missed call.
 
 On android the callscreen should be displayed by the app. Use
 
@@ -151,7 +151,7 @@ $ionicCallKit.finishRing(uuid,notify);
 
 to stop the ringtone playing.
 
-* uuid : String = Uniquie identifier of the call. In case of incoming call, it is provided by the reportIncomingCall onSuccess callback.
+* *uuid: String* - Uniquie identifier of the call. In case of incoming call, it is provided by the `reportIncomingCall` `onSuccess` callback.
 
 # Call Flows:
 
