@@ -79,17 +79,17 @@ callChanged = function(obj) {
 ```
 
 callback is called with an object, which contains the following properties:
-* "uuid" : The UUID of the call
-* "handle" : The handle of the call (the string what is displayed on the phone) String
-* "isOutgoing" : is the call outgoing? Boolean
-* "isOnHold" : is the is on hold? Boolean
-* "hasConnected" : is it connected? Boolean
-* "hasEnded" : is it eneded? Boolean
-* "hasStartedConnecting" : is it started connecting (i.e. user pressed the accept button)? Boolean
-* "endDate" : when the call is ended? String (ISO8601 format date time)
-* "connectDate" : when the call is connected? String (ISO8601 format date time)
-* "connectingDate" : when the call started to connect? String (ISO8601 format date time)
-* "duration" : call duration Double
+* *uuid* - The UUID of the call
+* *handle* - The handle of the call (the string what is displayed on the phone) String
+* *isOutgoing* - is the call outgoing? Boolean
+* *isOnHold* - is the is on hold? Boolean
+* *hasConnected* - is it connected? Boolean
+* *hasEnded* - is it eneded? Boolean
+* *hasStartedConnecting* - is it started connecting (i.e. user pressed the accept button)? Boolean
+* *endDate* - when the call is ended? String (ISO8601 format date time)
+* *connectDate* - when the call is connected? String (ISO8601 format date time)
+* *connectingDate* - when the call started to connect? String (ISO8601 format date time)
+* *duration* - call duration Double
 
 ```javascript
 audioSystem = function(message) {
