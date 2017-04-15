@@ -15,55 +15,53 @@ cordova plugin add https://github.com/Taracque/ionic-plugin-callkit.git
 
 ## How to use
 
+Firstly make sure that `Voice over IP` under `Capabilities` -> `Background Modes` is enabled.
+
 Exmaple (only one call tracked at a time, this code is just a hint, see [Call Flow](#call-flows) description below):
 
 ```javascript
-// as Angular 1 Factory
-.factory('$ionicCallKit', ['$q', CallKitFactory]);
-
-var CallKitFactory = function($q) {
+var callKitService = new CallKitService();
+function CallKitService() {
   var callKit;
   var callUUID;
 
   return {
-    register : function( callChanged, audioSystem ) {
+    hasCallKit: function() {
+      return typeof CallKit !== "undefined" && callKit;
+    },
+    register: function(callChanged, audioSystem) {
       if (typeof CallKit !== "undefined") {
-        var q = $q.defer();
-	callKit = new CallKit();
-	callKit.register( callChanged, audioSystem );
-	q.resolve(callKit);
-	return q.promise;
-      } else {
-	return this;
+        callKit = new CallKit();
+        callKit.register(allChanged, audioSystem);
       }
     },
-    reportIncomingCall: function(name,params) {
-      if ((typeof CallKit !== "undefined") && (callKit)) {
-	callKit.reportIncomingCall(name,params,function(uuid) {
+    reportIncomingCall: function(name, params) {
+      if (this.hasCallKit()) {
+        callKit.reportIncomingCall(name, params, function(uuid) {
           callUUID = uuid;
         });
       }
     },
-    startCall: function(name,isVideo) {
-      if ((typeof CallKit !== "undefined") && (callKit)) {
-        callKit.startCall(name,isVideo,function(uuid) {
+    startCall: function(name, isVideo) {
+      if (this.hasCallKit()) {
+        callKit.startCall(name, isVideo, function(uuid) {
           callUUID = uuid;
         });
       }
     },
     callConnected: function(uuid) {
-      if ((typeof CallKit !== "undefined") && (callKit)) {
+      if (this.hasCallKit()) {
         callKit.callConnected(callUUID);
       }
     },
     endCall: function(notify) {
-      if ((typeof CallKit !== "undefined") && (callKit)) {
-	callKit.endCall(callUUID,notify);
+      if (this.hasCallKit()) {
+        callKit.endCall(callUUID, notify);
       }
     },
     finishRing: function() {
-      if ((typeof CallKit !== "undefined") && (callKit)) {
-	callKit.finishRing();
+      if (this.hasCallKit()) {
+        callKit.finishRing();
       }
     }
   };
@@ -75,14 +73,14 @@ var CallKitFactory = function($q) {
 Plugin initialization:
 
 ```javascript
-$ionicCallKit.register( callChanged, audioSystem )
+callKitService.register( callChanged, audioSystem )
 ```
 
 Initializes the plugin a register callback codes.
 
 ```javascript
 callChanged = function(obj) {
-	< your code >
+  < your code >
 }
 ```
 
@@ -101,7 +99,7 @@ callback is called with an object, which contains the following properties:
 
 ```javascript
 audioSystem = function(message) {
-	< your code >
+  < your code >
 }
 ```
 * *message: String* - can be `startAudio`, `stopAudio`, `configureAudio`
@@ -109,7 +107,7 @@ audioSystem = function(message) {
 Use 
 
 ```javascript
-$ionicCallKit.reportIncomingCall(name,params,onSuccess);
+callKitService.reportIncomingCall(name, params, onSuccess);
 ```
 
 to activate the call screen.
@@ -123,7 +121,7 @@ to activate the call screen.
 * *onSuccess: function(uuid)* - a function where the call's `uuid` will be provided. This `uuid` should be used when calling `endCall` function.
 
 ```javascript
-$ionicCallKit.startCall(name,isVideo,onSuccess);
+callKitService.startCall(name, isVideo, onSuccess);
 ```
 
 to report an initiated outgoing call to the system
@@ -134,16 +132,16 @@ to report an initiated outgoing call to the system
 Use
 
 ```javascript
-$ionicCallKit.callConnected(uuid);
+callKitService.callConnected(uuid);
 ```
 
 to report the system that the outgoing call is connected.
-* uuid : String = Uniquie identifier of the call.
+* *uuid: String* - Uniquie identifier of the call.
 
 Use
 
 ```javascript
-$ionicCallKit.endCall(uuid,notify);
+callKitService.endCall(uuid, notify);
 ```
 
 to let the system know, the call is ended.
@@ -154,7 +152,7 @@ to let the system know, the call is ended.
 On android the callscreen should be displayed by the app. Use
 
 ```javascript
-$ionicCallKit.finishRing(uuid,notify);
+callKitService.finishRing(uuid, notify);
 ```
 
 to stop the ringtone playing.
