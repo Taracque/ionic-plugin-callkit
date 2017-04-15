@@ -7,6 +7,14 @@ On Android it mimics CallKit calls, but the callscreen itself should be displaye
 On iOS use resources/Ringtone.caf as ringtone (optional, uses system default ringtone if not found) automatically looped
 On Android res/raw/ringtone.mp3 or res/raw/ringtone.ogg is used (filename is lowercase, if not found then plays the default system ring), use ANDROID_LOOP metadata to loop the ogg ringtone
 
+## Install
+
+```
+cordova plugin add https://github.com/Taracque/ionic-plugin-callkit.git
+```
+
+## How to use
+
 Exmaple (only one call tracked at a time, this code is just a hint, see [Call Flow](#call-flows) description below):
 
 ```javascript
@@ -62,7 +70,7 @@ var CallKitFactory = function($q) {
 }
 ```
 
-# API
+## API
 
 Plugin initialization:
 
@@ -153,7 +161,7 @@ to stop the ringtone playing.
 
 * *uuid: String* - Uniquie identifier of the call. In case of incoming call, it is provided by the `reportIncomingCall` `onSuccess` callback.
 
-# Call Flows:
+## Call Flows:
 
 Incoming:
 
