@@ -1,5 +1,6 @@
 # ionic-plugin-callkit
-Ionic/Cordova plugin for CallKit
+
+> Ionic/Cordova plugin for CallKit.
 
 On Android it mimics CallKit calls, but the callscreen itself should be displayed by the Ionic/Cordova app. On Android the main activity must be called as "MainActivity". You can check this in your AndroidManifest.xml file, the first activity tag under application tag should have android:name="MainActivity" attribute.
 
@@ -10,51 +11,51 @@ Exmaple (only one call tracked at a time, this code is just a hint, see [Call Fl
 
 ```javascript
 .factory('$ionicCallKit', ['$q', function($q) {
-	var callKit;
-    var callUUID;
+  var callKit;
+  var callUUID;
 
-	return {
-		register : function( callChanged, audioSystem ) {
-			if (typeof CallKit !== "undefined") {
-				var q = $q.defer();
-				callKit = new CallKit();
-				callKit.register( callChanged, audioSystem );
-				q.resolve(callKit);
-				return q.promise;
-			} else {
-				return this;
-			}
-		},
-		reportIncomingCall : function(name,params) {
-			if ((typeof CallKit !== "undefined") && (callKit)) {
-				callKit.reportIncomingCall(name,params,function(uuid) {
-                    callUUID = uuid;
-                });
-			}
-		},
-        startCall : function(name,isVideo) {
-			if ((typeof CallKit !== "undefined") && (callKit)) {
-                callKit.startCall(name,isVideo,function(uuid) {
-                    callUUID = uuid;
-                });
-			}
-        },
-        callConnected : function(uuid) {
-			if ((typeof CallKit !== "undefined") && (callKit)) {
-                callKit.callConnected(callUUID);
-			}
-        },
-		endCall : function(notify) {
-			if ((typeof CallKit !== "undefined") && (callKit)) {
-				callKit.endCall(callUUID,notify);
-			}
-		},
-		finishRing : function() {
-			if ((typeof CallKit !== "undefined") && (callKit)) {
-				callKit.finishRing();
-			}
-		}
-	};
+  return {
+    register : function( callChanged, audioSystem ) {
+      if (typeof CallKit !== "undefined") {
+        var q = $q.defer();
+	callKit = new CallKit();
+	callKit.register( callChanged, audioSystem );
+	q.resolve(callKit);
+	return q.promise;
+      } else {
+	return this;
+      }
+    },
+    reportIncomingCall: function(name,params) {
+      if ((typeof CallKit !== "undefined") && (callKit)) {
+	callKit.reportIncomingCall(name,params,function(uuid) {
+          callUUID = uuid;
+        });
+      }
+    },
+    startCall: function(name,isVideo) {
+      if ((typeof CallKit !== "undefined") && (callKit)) {
+        callKit.startCall(name,isVideo,function(uuid) {
+          callUUID = uuid;
+        });
+      }
+    },
+    callConnected: function(uuid) {
+      if ((typeof CallKit !== "undefined") && (callKit)) {
+        callKit.callConnected(callUUID);
+      }
+    },
+    endCall: function(notify) {
+      if ((typeof CallKit !== "undefined") && (callKit)) {
+	callKit.endCall(callUUID,notify);
+      }
+    },
+    finishRing: function() {
+      if ((typeof CallKit !== "undefined") && (callKit)) {
+	callKit.finishRing();
+      }
+    }
+  };
 }])
 ```
 
