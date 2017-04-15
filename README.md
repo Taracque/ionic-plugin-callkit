@@ -10,7 +10,10 @@ On Android res/raw/ringtone.mp3 or res/raw/ringtone.ogg is used (filename is low
 Exmaple (only one call tracked at a time, this code is just a hint, see [Call Flow](#call-flows) description below):
 
 ```javascript
-.factory('$ionicCallKit', ['$q', function($q) {
+// as Angular 1 Factory
+.factory('$ionicCallKit', ['$q', CallKitFactory]);
+
+var CallKitFactory = function($q) {
   var callKit;
   var callUUID;
 
@@ -56,7 +59,7 @@ Exmaple (only one call tracked at a time, this code is just a hint, see [Call Fl
       }
     }
   };
-}])
+}
 ```
 
 # API
