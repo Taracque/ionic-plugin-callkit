@@ -1,6 +1,6 @@
 # ionic-plugin-callkit
 
-> Ionic/Cordova plugin for CallKit.
+Ionic/Cordova plugin for CallKit.
 
 On Android it mimics CallKit calls, but the callscreen itself should be displayed by the Ionic/Cordova app. On Android the main activity must be called as "MainActivity". You can check this in your AndroidManifest.xml file, the first activity tag under application tag should have android:name="MainActivity" attribute.
 
@@ -14,8 +14,6 @@ cordova plugin add https://github.com/Taracque/ionic-plugin-callkit.git
 ```
 
 ## How to use
-
-Firstly make sure that `Voice over IP` under `Capabilities` -> `Background Modes` is enabled.
 
 Exmaple (only one call tracked at a time, this code is just a hint, see [Call Flow](#call-flows) description below):
 
