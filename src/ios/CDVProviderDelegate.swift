@@ -214,7 +214,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
          */
     }
 
-    private func postAudioNotification(_ message: String) {
+    fileprivate func postAudioNotification(_ message: String) {
         NotificationCenter.default.post(name: type(of: self).AudioNotification, object: message)
     }
 }
