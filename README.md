@@ -15,7 +15,7 @@ cordova plugin add https://github.com/Taracque/ionic-plugin-callkit.git
 
 ## How to use
 
-Exmaple (only one call tracked at a time, this code is just a hint, see [Call Flow](#call-flows) description below):
+Example (only one call tracked at a time, this code is just a hint, see [Call Flow](#call-flows) description below):
 
 ```javascript
 var callKitService = new CallKitService();
@@ -23,45 +23,59 @@ function CallKitService() {
   var callKit;
   var callUUID;
 
+  /**
+   * Determine wheter the plugin is available.
+   *
+   * @return {boolean} `true` if the plugin is available.
+   */
+  function hasCallKit() {
+    return typeof CallKit !== "undefined" && callKit;
+  }
+
+  /**
+   * Wrapper for functions which cannot be executed without the plugin.
+   *
+   * @param {Function} fn Function to be called only if plugin is available.
+   *
+   * @return {Function} A function running `fn` (with its arguments), if plugin is available.
+   */
+  function execWithPlugin(fn) {
+    return function() {
+      if (!hasCallKit()) {
+        console.error('callkit plugin not available');
+        return;
+      }
+
+      fn.apply(this, Array.prototype.slice.call(arguments));
+    };
+  }
+
   return {
-    hasCallKit: function() {
-      return typeof CallKit !== "undefined" && callKit;
-    },
     register: function(callChanged, audioSystem) {
       if (typeof CallKit !== "undefined") {
         callKit = new CallKit();
-        callKit.register(allChanged, audioSystem);
+        callKit.register(callChanged, audioSystem);
       }
     },
-    reportIncomingCall: function(name, params) {
-      if (this.hasCallKit()) {
-        callKit.reportIncomingCall(name, params, function(uuid) {
-          callUUID = uuid;
-        });
-      }
-    },
-    startCall: function(name, isVideo) {
-      if (this.hasCallKit()) {
-        callKit.startCall(name, isVideo, function(uuid) {
-          callUUID = uuid;
-        });
-      }
-    },
-    callConnected: function(uuid) {
-      if (this.hasCallKit()) {
-        callKit.callConnected(callUUID);
-      }
-    },
-    endCall: function(notify) {
-      if (this.hasCallKit()) {
+    reportIncomingCall: execWithPlugin(function(name, params) {
+      callKit.reportIncomingCall(name, params, function(uuid) {
+        callUUID = uuid;
+      });
+    }),
+    startCall: execWithPlugin(function(name, isVideo) {
+      callKit.startCall(name, isVideo, function(uuid) {
+        callUUID = uuid;
+      });
+    }),
+    callConnected: execWithPlugin(function(uuid) {
+      callKit.callConnected(callUUID);
+    }),
+    endCall: execWithPlugin(function(notify) {
         callKit.endCall(callUUID, notify);
-      }
-    },
-    finishRing: function() {
-      if (this.hasCallKit()) {
+    }),
+    finishRing: execWithPlugin(function() {
         callKit.finishRing();
-      }
-    }
+    })
   };
 }
 ```
@@ -102,10 +116,10 @@ audioSystem = function(message) {
 ```
 * *message: String* - can be `startAudio`, `stopAudio`, `configureAudio`
 
-Use 
+Use
 
 ```javascript
-callKitService.reportIncomingCall(name, params, onSuccess);
+callKitService.reportIncomingCall(name, params);
 ```
 
 to activate the call screen.
@@ -116,16 +130,14 @@ to activate the call screen.
   * `ungroup` : set to true if call supports ungrouping (default: false)
   * `dtmf` : set to true if call supports dtmf tones (default: false)
   * `hold` : set to true if call supports hold (default: false)
-* *onSuccess: function(uuid)* - a function where the call's `uuid` will be provided. This `uuid` should be used when calling `endCall` function.
 
 ```javascript
-callKitService.startCall(name, isVideo, onSuccess);
+callKitService.startCall(name, isVideo);
 ```
 
 to report an initiated outgoing call to the system
 * *name: String* - the callee name, which should displayed in the call history.
 * *isVideo: boolean* - set to true if this call can be a video call.
-* *onSuccess: function(uuid)* - a function where the call's `uuid` will be provided. This `uuid` should be used when calling `callConnected` and `endCall` functions.
 
 Use
 
