@@ -75,7 +75,7 @@
 		<source-file src="src/ios/CDVCallManager.swift" />
 
 		<framework src="CallKit.framework" />
-  </platform>
+	</platform>
 
     <!-- android -->
 	<platform name="android">
