@@ -196,7 +196,7 @@ You can use the tag `<resource-file>` in config.xml (*since cordova-ios 4.4.0*) 
 
 ```xml
 <platform name="ios">
-    <resource-file src="resources/ios/icon/callkit-icon.png" target="callkit-icon.png" />s
+    <resource-file src="resources/ios/icon/callkit-icon.png" target="callkit-icon.png" />
     [...]
 </platform>
 ```
