@@ -1,20 +1,41 @@
 {
   "name": "ionic-plugin-callkit",
-  "version": "0.0.7",
-  "description": "CallKit plugin for Cordova apps",
+  "version": "0.0.6",
+  "description": "Ionic CallKit Plugin",
+  "cordova": {
+    "id": "ionic-plugin-callkit",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VinceOPS/ionic-plugin-callkit.git"
+    "url": "git+https://github.com/taracque/ionic-plugin-callkit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/taracque/ionic-plugin-callkit/issues"
   },
   "keywords": [
     "cordova",
-    "callkit",
-    "ionic"
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "ionic",
+    "taracque",
+    "callkit"
   ],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/VinceOPS/ionic-plugin-callkit/issues"
-  },
-  "homepage": "https://github.com/VinceOPS/ionic-plugin-callkit#readme"
+  "author": "Taracque <taracque@taracque.hu>",
+  "license": "Apache 2.0",
+  "homepage": "https://github.com/taracque/ionic-plugin-callkit#readme",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    },
+    {
+      "name": "cordova-ios",
+      "version": ">=4.0.0"
+    }
+  ]
 }
