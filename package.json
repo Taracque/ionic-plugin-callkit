@@ -1,0 +1,20 @@
+{
+  "name": "ionic-plugin-callkit",
+  "version": "0.0.7",
+  "description": "CallKit plugin for Cordova apps",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VinceOPS/ionic-plugin-callkit.git"
+  },
+  "keywords": [
+    "cordova",
+    "callkit",
+    "ionic"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VinceOPS/ionic-plugin-callkit/issues"
+  },
+  "homepage": "https://github.com/VinceOPS/ionic-plugin-callkit#readme"
+}
