@@ -185,3 +185,18 @@ Outgoing:
 2. initiate call
 3. once the call is connected use `callConnected`
 4. once the call is finished use `endCall`
+
+
+## iOS Quirks
+
+CallKit adds a "quick launch" button on the call screen, for your application. The icon file (white mask) `callkit-icon.png` is read from the XCode `Resources` project.
+> The icon image should be a square with side length of 40 points. The alpha channel of the image is used to create a white image mask, which is used in the system native in-call UI for the button which takes the user from this system UI to the 3rd-party app.
+
+You can use the tag `<resource-file>` in config.xml (*since cordova-ios 4.4.0*) to copy the file in the app bundle:
+
+```xml
+<platform name="ios">
+    <resource-file src="resources/ios/icon/callkit-icon.png" target="callkit-icon.png" />s
+    [...]
+</platform>
+```

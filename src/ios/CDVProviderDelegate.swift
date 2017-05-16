@@ -34,7 +34,7 @@ final class CDVProviderDelegate: NSObject, CXProviderDelegate {
 
         providerConfiguration.supportedHandleTypes = [.generic]
 
-        if let iconMaskImage = UIImage(named: "IconMask") {
+        if let iconMaskImage = UIImage(named: "callkit-icon") {
             providerConfiguration.iconTemplateImageData = UIImagePNGRepresentation(iconMaskImage)
         }
 
