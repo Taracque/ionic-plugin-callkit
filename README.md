@@ -1,16 +1,18 @@
 # ionic-plugin-callkit
 
-Ionic/Cordova plugin for CallKit.
+Ionic/Cordova plugin for [CallKit](https://developer.apple.com/reference/callkit).
 
-On Android it mimics CallKit calls, but the callscreen itself should be displayed by the Ionic/Cordova app. On Android the main activity must be called as "MainActivity". You can check this in your AndroidManifest.xml file, the first activity tag under application tag should have android:name="MainActivity" attribute.
+On Android and iOS versions prior to 10, it mimics CallKit calls, but the callscreen itself should be displayed by the Ionic/Cordova app.
+On Android the main activity must be called as "MainActivity". You can check this in your AndroidManifest.xml file, the first activity tag under application tag should have android:name="MainActivity" attribute.
 
-On iOS use resources/Ringtone.caf as ringtone (optional, uses system default ringtone if not found) automatically looped
-On Android res/raw/ringtone.mp3 or res/raw/ringtone.ogg is used (filename is lowercase, if not found then plays the default system ring), use ANDROID_LOOP metadata to loop the ogg ringtone
+On iOS 10+, use resources/Ringtone.caf as ringtone (optional, uses system default ringtone if not found) automatically looped
+On iOS versions prior to 10, a local notification is displayed if the app is in background.
+On Android res/raw/ringtone.mp3 or res/raw/ringtone.ogg is used (filename is lowercase, if not found then plays the default system ring), use ANDROID_LOOP metadata to loop the ogg ringtone.
 
 ## Install
 
 ```
-cordova plugin add https://github.com/Taracque/ionic-plugin-callkit.git
+cordova plugin add https://github.com/VinceOPS/ionic-plugin-callkit.git
 ```
 
 ## How to use
@@ -62,6 +64,10 @@ function CallKitService() {
         callUUID = uuid;
       });
     }),
+    askNotificationPermission: execWithPlugin(function() {
+      // only useful on iOS 9, as we use local notifications to report incoming calls
+      callKit.askNotificationPermission();
+    }),
     startCall: execWithPlugin(function(name, isVideo) {
       callKit.startCall(name, isVideo, function(uuid) {
         callUUID = uuid;
@@ -85,7 +91,15 @@ function CallKitService() {
 Plugin initialization:
 
 ```javascript
-callKitService.register( callChanged, audioSystem )
+callKitService.register(callChanged, audioSystem)
+```
+
+For iOS versions prior to 10, as CallKit is not available, this plugin displays
+a local notification (when app is in background) to report an incoming call.
+Permission to display notifications should be asked this way:
+
+```javascript
+callKitService.askNotificationPermission();
 ```
 
 Initializes the plugin a register callback codes.

@@ -28,7 +28,7 @@ CallKit.prototype.reportIncomingCall = function(name,params,onSuccess) {
 	var supportsUngroup = false;
 	var supportsDTMF = false;
 	var supportsHold = false;
-	
+
 	if (typeof params === "boolean") {
 		supportsVideo = params;
 	} else if (typeof params === "object") {
@@ -45,6 +45,12 @@ CallKit.prototype.reportIncomingCall = function(name,params,onSuccess) {
 	};
 
 	exec(successCallback, errorCallback, 'CallKit', 'reportIncomingCall', [name, supportsVideo, supportsGroup, supportsUngroup, supportsDTMF, supportsHold] );
+};
+
+CallKit.prototype.askNotificationPermission = function() {
+	// TODO: allow user to pass a succes/error callback to know the user's answer
+	var cb = function() {};
+	exec(cb, cb, 'CallKit', 'askNotificationPermission', []);
 };
 
 CallKit.prototype.startCall = function(name,isVideo,onSuccess) {

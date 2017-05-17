@@ -11,10 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/taracque/ionic-plugin-callkit.git"
+    "url": "git+https://github.com/VinceOPS/ionic-plugin-callkit.git"
   },
   "bugs": {
-    "url": "https://github.com/taracque/ionic-plugin-callkit/issues"
+    "url": "https://github.com/VinceOPS/ionic-plugin-callkit/issues"
   },
   "keywords": [
     "cordova",
@@ -22,12 +22,11 @@
     "cordova-android",
     "cordova-ios",
     "ionic",
-    "taracque",
     "callkit"
   ],
-  "author": "Taracque <taracque@taracque.hu>",
+  "author": "Taracque <taracque@taracque.hu>, VinceOPS <vince.g.135@gmail.com>",
   "license": "Apache 2.0",
-  "homepage": "https://github.com/taracque/ionic-plugin-callkit#readme",
+  "homepage": "https://github.com/VinceOPS/ionic-plugin-callkit#readme",
   "engines": [
     {
       "name": "cordova",
