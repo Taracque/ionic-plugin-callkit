@@ -12,7 +12,7 @@ On Android res/raw/ringtone.mp3 or res/raw/ringtone.ogg is used (filename is low
 ## Install
 
 ```
-cordova plugin add https://github.com/VinceOPS/ionic-plugin-callkit.git
+cordova plugin add https://github.com/taracque/ionic-plugin-callkit.git
 ```
 
 ## How to use
