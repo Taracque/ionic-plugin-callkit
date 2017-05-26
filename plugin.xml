@@ -56,11 +56,11 @@
     <!-- ios -->
     <platform name="ios">
 	    <hook type="after_prepare" src="hooks/after_prepare.js" />
-		  <config-file target="config.xml" parent="/*">
-			  <feature name="CallKit">
-				  <param name="ios-package" value="CDVCallKit" />
-			  </feature>
-		  </config-file>
+		<config-file target="config.xml" parent="/*">
+			<feature name="CallKit">
+				<param name="ios-package" value="CDVCallKit" />
+			</feature>
+		</config-file>
 
 		<config-file target="*-Info.plist" parent="UIBackgroundModes">
 			<array>
