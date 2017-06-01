@@ -26,7 +26,7 @@ function CallKitService() {
   var callUUID;
 
   /**
-   * Determine wheter the plugin is available.
+   * Determine whether the plugin is available.
    *
    * @return {boolean} `true` if the plugin is available.
    */
@@ -116,7 +116,7 @@ callback is called with an object, which contains the following properties:
 * *isOutgoing* - is the call outgoing? Boolean
 * *isOnHold* - is the is on hold? Boolean
 * *hasConnected* - is it connected? Boolean
-* *hasEnded* - is it eneded? Boolean
+* *hasEnded* - is it ended? Boolean
 * *hasStartedConnecting* - is it started connecting (i.e. user pressed the accept button)? Boolean
 * *endDate* - when the call is ended? String (ISO8601 format date time)
 * *connectDate* - when the call is connected? String (ISO8601 format date time)
@@ -160,7 +160,7 @@ callKitService.callConnected(uuid);
 ```
 
 to report the system that the outgoing call is connected.
-* *uuid: String* - Uniquie identifier of the call.
+* *uuid: String* - Unique identifier of the call.
 
 Use
 
@@ -170,7 +170,7 @@ callKitService.endCall(uuid, notify);
 
 to let the system know, the call is ended.
 
-* *uuid: String* - Uniquie identifier of the call. In case of incoming call, it is provided by the `reportIncomingCall` `onSuccess` callback.
+* *uuid: String* - Unique identifier of the call. In case of incoming call, it is provided by the `reportIncomingCall` `onSuccess` callback.
 * *notify: Boolean* - If `true`, sends a local notification to the system about the missed call.
 
 On android the callscreen should be displayed by the app. Use
@@ -181,7 +181,7 @@ callKitService.finishRing(uuid, notify);
 
 to stop the ringtone playing.
 
-* *uuid: String* - Uniquie identifier of the call. In case of incoming call, it is provided by the `reportIncomingCall` `onSuccess` callback.
+* *uuid: String* - Unique identifier of the call. In case of incoming call, it is provided by the `reportIncomingCall` `onSuccess` callback.
 
 ## Call Flows:
 
