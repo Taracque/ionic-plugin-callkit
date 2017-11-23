@@ -76,8 +76,8 @@ function CallKitService() {
     callConnected: execWithPlugin(function(uuid) {
       callKit.callConnected(callUUID);
     }),
-    endCall: execWithPlugin(function(notify) {
-        callKit.endCall(callUUID, notify);
+    endCall: execWithPlugin(function(notify, contentTitle) {
+        callKit.endCall(callUUID, notify, contentTitle);
     }),
     finishRing: execWithPlugin(function() {
         callKit.finishRing();
@@ -165,13 +165,13 @@ to report the system that the outgoing call is connected.
 Use
 
 ```javascript
-callKitService.endCall(uuid, notify);
+callKitService.endCall(notify, contentTitle);
 ```
 
 to let the system know, the call is ended.
 
-* *uuid: String* - Unique identifier of the call. In case of incoming call, it is provided by the `reportIncomingCall` `onSuccess` callback.
-* *notify: Boolean* - If `true`, sends a local notification to the system about the missed call.
+* *notify: boolean* - If `true`, sends a local notification to the system about the missed call.
+* *contentTitle: String* - Title of the notification (will default to `{appName} call missed`).
 
 On android the callscreen should be displayed by the app. Use
 
